@@ -1,0 +1,2251 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage{amsmath, amssymb, amsfonts, amsthm, epsfig,epstopdf,titling,url,array, enumitem}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{txfonts, textcomp}
+
+%%% SETUP for amsmath %%%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem*{cor}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{conj}{Conjecture}
+\newtheorem*{eg}{Example}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+%%% END SETUP for amsmath %%%
+
+%%% Maths shortcuts %%%
+
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
+\newcommand{\Union}{\bigcup}
+\newcommand{\Intersection}{\bigcap}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\Real}{\operatorname{Re}}
+\newcommand{\Imp}{\operatorname{Im}}
+\newcommand{\PP}{$ \phi \;$}
+\newcommand{\phirel}{\underset{\phi}{\sim}}
+\newcommand{\Log}{\operatorname{Log}}
+\newcommand{\Arg}{\operatorname{Arg}}
+\newcommand{\Res}[2]{\mathop{Res} \left[ #1, \; #2 \right]}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+\newcommand{\contradiction}{\begin{flushright} \textreferencemark \end{flushright}}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\tableofcontents
+
+\subsection*{Recommended reading}
+\begin{itemize}
+  \item Kolmogorov, Fomim - \textit{Introductory real analysis}
+  \item Royden - \textit{Real analysis}
+
+\end{itemize}
+
+\chapter{Set theory}
+
+\section{Classes and relations}
+
+\begin{defn}[classes]
+A partition of a set into classes is the decomposition of the set into piecewise disjoint subsets. Each subset is a class of the partition.
+\end{defn}
+\begin{eg}
+The age groups within a country are classes.
+\end{eg}
+Consider a set $M$ and a set of ordered pairs of its elements $(a,b)$ with $a, b \in M$.
+
+\begin{defn}[relation]
+$\phi$ is called a relation on $M$ if $\exists$ at least one pair $a \phirel b$ for each $a \in M$.
+\end{defn}
+We write that $a \phirel b$ by some relation \PP 
+\begin{eg}
+If $M=\R$ then $a < b$ is a relation. 
+\end{eg}
+Not every $\phi$ can be used to decompose $M$ into classes.\\
+e.g. $a < b$ with $a,b, \in M = \R$ cannot be used since if $a < b$ then $b \nless a$.
+
+% I think I missed some stuff around here, TODO: please check against handwritten notes
+
+\begin{defn}[equivalence relation]
+A relation $\phi$ on $M$ is called an equivalence relation if it satisfies 3 conditions:
+\begin{enumerate}
+    \item $a \phirel a$ (\textbf{reflexivity})
+    \item if $a \phirel b$ then $b \phirel a$ (\textbf{symmetry})
+    \item $a \phirel b$ and $b \phirel c \Rightarrow a \phirel c$ (\textbf{transitivity})
+\end{enumerate}
+\end{defn}
+
+\begin{thm}
+  $M$ can be partitioned into classes by $\phi$ $\Leftrightarrow$ $\phi$ is an equivalence relation on $M$.
+\end{thm}
+
+\begin{proof}
+Let $M$ be partitioned into classes by $\phi$, i.e. if $a \phirel b$ then a,b belong to the same class: condition 1,2,3 are satisfied.\\
+Conversly, let $\phi$ be a relation on $M$ statisfiying 1,2,3.
+Let $K_a \subset M$ where $K_a$ is the set of all $x \in M$ s.t. $x \phirel a$ - then the $K_a$'s are either identical or disjoint.
+
+Suppose $c \in K_a, c \in K_b$ with $a,b,c \in M$.
+Then $c \phirel a \implies a \phirel c$ (reflex) and $c \phirel b$
+all of which implies by transitivity $a \phirel b$.
+
+If $x\in K_a$, $x \phirel a$. But $a \phirel b$ so $x rel b$ i.e. $x \in K_b$
+i.e. $K_a \subset K_b$ similarly $K_b \subset K_a$
+\end{proof}
+
+\begin{defn}[infinite set]
+We say that a set is \textit{infinite} if when we remove finitely many elements, it remains non empty
+\end{defn}
+
+\begin{defn}[countable set]
+An infinite set $M$ is called \textit{countable} if its elements can be put into 1 to 1 correspondence with the natural numbers.
+\end{defn}
+
+\begin{eg}\;\
+  \begin{enumerate}
+     \item $Z$ - set of integers is countable since $Z = {0, -1, 1, -2, 2, ...}$ maps to ${1,2,3, ..}$
+     \item The set {2, 4, 6, ...} is countable since $2n \leftrightarrow n, n =1,2$
+     \item Rational numbers $Q$, this set is countable: each element of $Q$ is a ration $\frac{p}{q}, q \in {1,2,...}, p \in Z$ with $p$ and $q$ coprime.
+Order them by increasing height $|p| + q$ and proceed to similar mapping as $Z$ ($Q=\{ \frac{0}{1}; \frac{-1}{1}; \frac{1}{1}, \frac{-2}{1}, \frac{-1}{2}, \frac{1}{2}, ...\})$
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}
+  Any subset of a countable set is countable or finite.
+\end{thm}
+\begin{proof}
+$M=\{ a_1, a_2, ... \}$. A subset $\{a_{j_1}, a_{j_2}, ...\}$, note $a_{j_k} \leftrightarrow K$
+\end{proof}
+
+\begin{thm}
+  A union of a finite or countable number of countable sets is countable.
+\end{thm}
+\begin{eg}
+$A_1, A_2, ...$ is countable.
+\end{eg}
+\begin{proof}
+Assume $A_j$'s are disjoint. (if not disjoint, consider\\
+$A_1, A_2 \backslash \{A_1\}, A_3 \backslash \{(A_1 \cup A_2)\}, ..., )$ disjoint countable by 1.
+\end{proof}
+
+\begin{thm}\label{infinite_set_has_countable_subset}
+  Any infinite set has a countable subset.
+\end{thm}
+\begin{proof}
+Let $M$ be an infinite set. Take an element $a_1 \in M$, then $M\backslash\{a_1\}$ is an infinite set.
+Take $a_2 \in M\backslash \{a_1\}$ then $M\backslash \{a_1, a_2\}$ is infinite, etc. and then $\{a_n\}$ is countable subset.
+\end{proof}
+
+\begin{defn}[equivalence of sets]
+2 sets $M, N$ are called equivalent (M $\sim$ N) if there exists a 1-1 correspondence between their elements.
+\end{defn}
+\begin{note}
+  $\sim$ is equivalence relation on sets
+\end{note}
+
+\begin{eg} \;\
+  \begin{enumerate}
+  \item \[ [a,b] \sim [c,d] - a,b,c,d \in \R \]
+  % TODO: insert picture of triangle with 2 segments for [a,b] and [c,d]
+
+  \item Set of points of the plane $\R^2 \sim$ sphere without north pole
+  % TODO: insert picture of sphere onto plane with line starting from north pole and intersects the sphere somewhere which can hit anywhere in the plane 
+  \end{enumerate}
+\end{eg}
+
+\begin{defn}[proper subset]
+  A subset $A \subset M$ is proper if $A \neq M$
+\end{defn}
+
+\begin{thm}
+Any infinite set is equivalent to one of its proper subsets.
+\end{thm}
+
+\begin{proof}
+    Let $M$ be an infinite set. By \ref{infinite_set_has_countable_subset}
+  there exists a countable set $A = \{a_1, a_2, \dots\} \subset M$.
+
+  \[ A = A_1 \cup A_2, A_1= \{a_1, a_3, \dots\}, A_2 = \{a_2, a_4, \dots\}\]
+
+  Since $2n - 1 \leftrightarrow n$, $A_1 \sim A$
+
+  Now $M = A \cup (M\backslash A) \sim A_1 \cup (M \backslash A) = M \backslash A_2$ 
+\end{proof}
+
+\begin{theorem}
+  The set of real numbers in $[0,1]$ is uncountable.
+\end{theorem}
+
+\begin{proof}
+  Suppose this set in countable: $[0,1] = {a_1, a_2, \dots}$ then
+  \begin{align*}
+    a_1 &= 0. a_{11} a_{12} a_{13} a_{14} \dots \\
+    a_2 &= 0. a_{21} a_{22} \dots \\
+    a_3 &= 0. a_{31} \dots \\
+  \end{align*}
+
+  Consider $b = 0. b_1 b_2 b_3 \dots$ where $b_k \neq a_{kk}, 0, 9$.\\
+  $\Rightarrow b \in [0,1] \text{ and } b\notin \{a_1, a_2, \dots\}$ 
+  \contradiction
+\end{proof}
+
+\begin{defn}[power of a set]
+  If $M \sim N$ we say that they have the same cardinality (or power) \[p(M) = p(N)\]
+\end{defn}
+
+\begin{defn}
+  If set $A$ is equivalent to a subset of B and no subset of $A$ is equivalent to $B$ we say that $p(A) < p(B)$.\\
+  (Cardinality of countable set is less than of a continuum - the cardinality of $[0,1]$)
+\end{defn}
+
+There are two other possibilities for the relation between $A$ and $B$.
+\begin{enumerate}
+  \item $A$ is equivalent to a subset of $B$ and $B$ is equivalent to a subset of $A$ then $A \sim B$ (Canter-Bernstein theorem)
+  \item neither $A$ or $B$ has a subset equivalent to each other (this is impossible)
+\end{enumerate}
+
+We deduce that either $p(A) < p(B)$, $p(A) > p(B)$ or $p(A) = p(B)$
+
+\begin{theorem}
+  For any $M$ let $\hat{M}$ be the set of all subsets of $M$ then $p(M) < p(\hat{M})$
+\end{theorem}
+
+\begin{proof}
+  Note that $p(\hat{M})$ is not less than $p(M)$ since $\hat{M}$ includes all one element subsets of $M$.
+  It remains to show that $p(\hat{M}) \neq p(M)$
+
+  Suppose $M \sim \hat{M}$, then $a \leftrightarrow A, a \in M, A \in \hat{M}, A \subset M$.\\
+    Consider the following set X: $a\in X$ if $a \leftrightarrow A$ and $a\notin A$ - then $X \subset M$, so $X \in \hat{M}$, and so for some $x \in M$, $x \leftrightarrow X$.
+
+  If $x\in X$ then $x \leftrightarrow X, x\in X \Rightarrow x \notin X$
+  If $x \notin X$ then $x \leftrightarrow X, x\notin X \Rightarrow x \in X$
+  \contradiction
+\end{proof}
+
+\begin{rem}
+  Notation: $p(\hat{M}) = 2^M$
+\end{rem}
+
+
+\begin{theorem}
+  The cardinality of the set of all subsets of a countable set is that of the continuum.
+\end{theorem}
+
+\begin{proof}
+  Let $\hat{M}$ be the set of all subsets of $\{1,2,\dots\} = \Z_+$.
+We have $\hat{M} = \hat{P} \cup \hat{R}$ with
+$\hat{P}$ is the set of all subsets of $\Z_+$ with infinite complement in $\Z_+$\\
+$\hat{R}$ is the set of all subsets of $\Z_+$ with finite complement in $\Z_+$\\
+(e.g. $\{1,2,3\} \in \hat{P}$ and $\{1,3,5, \dots\} \in \hat{P}$ but $\Z_+ \in \hat{R}$)
+
+Note that $\hat{R}$ is countable (proof left as an exercise) %TODO: add proof
+therefore it does not influence the cardinality of $\hat{M} = \hat{P} \cup \hat{R}$
+i.e. $\hat{M} \sim \hat{P}$ (why?)
+
+There is a 1 to 1 mapping between $[0,1)$ and $\hat{P}$:
+$A \in \hat{P}$ corresponds to $\alpha = \frac{\epsilon_1}{2} + \frac{\epsilon_2}{2^2} + \frac{\epsilon_3}{2^3}$
+where $\epsilon_k = 0$ if $k \notin A$, $\epsilon_k = 1$ if $k \in A$\\
+Remark: $\hat{R}$ has to be removed since for example $0.10111\dots = 0.11000\dots$
+\end{proof}
+
+\section{Exercises}
+\begin{enumerate}
+
+  \item Show that the set of real numbvers with 2 decimal expansions (e.g. 0.5000, 0.499999\dots) is countable
+
+  \item Show that the set of all polynomials with rational coefficients is countable
+
+  \item Show the existence of transcendental numbers, i.e. numbers that are not algebraic. (algebraic numbers is a root of a polynomial with rational coefficients)
+
+  \item Show that $(0,1) \sim \R^n, n\in Z_+$
+
+  \item If $M$ is a finite set, what is the number of elements in the set of all its subsets
+
+  \item Show that the set of figure "8" on the plane (that intersects itself) is countable
+
+\end{enumerate}
+
+\chapter{Algebraic Structures}
+
+\section{Rings and Algebras}
+
+We denote a system of sets $\cL, \cR, \dots$ and its set elements by $A, B, \dots$
+
+\begin{defn}[ring]
+  A nonempty system $\cR$ of sets is called a ring (of sets) if $A \triangle B \in \cR$ and $A \cap B \in \cR$ whenever $A,B \in \cR$.
+\end{defn}
+  
+Since $A \cup B = (A\triangle B)\triangle(A\cap B)$, $A \backslash B = A \triangle (a \triangle B)$ it follows if $\cR$ is a ring then
+\begin{itemize}
+    \item $\emptyset \in \cR$ since $A \backslash A = \emptyset$.
+    \item $A \union B \in \cR$.
+    \item $A \backslash B \in \cR$.
+\end{itemize}
+
+\begin{defn}[unit of a ring]
+   A set $E$ is called the unit of $\cL$ if $E \in \cL$ and $A \subset E$ for any $A \in \cL$
+\end{defn}
+
+
+\begin{defn}[algebra]
+A ring with a unit is called an algebra (of sets).
+\end{defn}
+
+\begin{eg}\;\
+  \begin{enumerate}
+    \item Set of all subsets of $A$ is an algebra with unit $A$
+    \item $\{\emptyset, A\}$ is an algebra with unit $A$
+    \item Set of all finite subsets of $A$ is a ring (algebra if $A$ is finite)
+    \item Set of all unbounded sets on $\R$ is a ring
+  \end{enumerate}
+\end{eg}
+
+\begin{theorem}
+  The intersection $R = \bigcap_{\phi}R_\phi$ of any number (finite or infinite) of rings is a ring
+\end{theorem}
+\begin{proof}
+  Take $A, B \in R$ - then $A, B \in R_\phi$ for all $\phi$. By the ring definition, $A \triangle B$ and $A \intersection B$ are both in $R_\phi$, for all $\phi$, - so $A \triangle B, A \intersection B \in R$.
+
+  %TODO: is this guaranteed to exist?
+  %The unit of $R$ is the element $E = \Intersection_\phi E_\phi$, where $E_\phi$ is the unit of $R_\phi$. If $A \in R$, then $A \in R_\phi$, so $A \subset E_\phi$, for all $\phi$ - so $A \subset E$.
+\end{proof}
+
+\begin{theorem}
+  For any nonempty system $L$ of sets there exists a unique ring $P$ containing $L$ and contained in any ring containing $L$ (minimal ring).
+\end{theorem}
+\begin{proof}
+  Note if $P$ exists it is unique.\\
+  Indeed consider $X = \underset{A\in L}{\bigcup} A$.
+  Let $M(X)$ denote the ring of all subsets of $X$.
+  Let $\Sigma$ be the set of all rings $R \subset M$ containing $L$
+
+  Then $P = \underset{R\in \Sigma}{\bigcap} {R}$. Indeed
+  \begin{enumerate}
+    \item $P$ is a ring (previous thm) %TODO: link it
+    \item $P$ contains $L$
+    \item Let $L \subset R^*$ then $R^* \cap M \in \Sigma$ 
+    $\Rightarrow P \subset R^*$ %, possible: M \in R^* $ %TODO: add what's missing here 
+  \end{enumerate}
+
+\end{proof}
+
+\begin{defn}
+   A non-empty system $L$ of sets is called a semiring if
+   \begin{enumerate}
+     \item $\emptyset \in L$
+     \item if $A, B \in L$ then  $A \cap B \in L$
+     \item if $A_1, A \in L$, $A_1 \subset A$ then $A$ can be represented as a finite union
+\[A= \bigcup_{j=1}^n A_j, A_j \in L, j=1,\dots,n \text{ of pairwise disjoint } A_j \text{'s (called finite expansion of A)}\]
+   \end{enumerate}
+\end{defn}
+
+\begin{eg}\;\
+  \begin{enumerate}
+  \item Any ring is a semiring. Indeed if $A, A_1 \in R$ then $A\backslash A_1 \in R, A = A_1 \cup (A\backslash A_1)$
+  \item Set of all intervals: $(a.b), (a,b], [a,b), [a,b], a \leq b, \emptyset$ - semiring %TODO: picture segment with (|c | d |)
+  \item Set of all rectangles in the plane: $a \leq x \leq b \& c \leq y \leq d ; a \leq x \leq b \& c \leq y \leq d \dots, \emptyset$ - semiring %TODO: insert rectangle picture
+  \end{enumerate}
+\end{eg}
+
+\begin{lemma}\label{finite_union_expansion}
+  Let $A_1, A_2, \dots, A_n \in A$ with $A_j \cap A_k = \emptyset$ if $j \neq k$
+  $A_j,A \in L - semiring$ for $j=1,\dots,n$
+
+  Then there is a finite expansion $A= \bigcup_{j=1}^s A_j, s \geq n, A_j \in L$
+
+  %TODO: insert picture taken on phone with rectangle
+\end{lemma}
+
+\begin{proof}
+  For $n=1$ it is the definition of a semiring.\\
+  Consider the set $A_1, A_2, \dots A_{m+1}$ satisfying the conditions of lemma and suppose lemma holds for $n=m$. Then
+  \[ A = A_1 \cup A_2 \cup \dots A_m \bigcup_{q=1}^p B, B_q \in L \text{ by finite extension}\]
+
+  Let $B_{q1} = A_{m_1} \cap B_q, q=1,\dots,p$
+  By definition of semiring $B = \bigcup_{j=1}^{something} B_{qj}$ - finite expansions
+
+  $\Rightarrow A = A_1 \cup A_2 \dots \cup A_m \cup A_{m+1} \cup_{q=1}^p \cup_{j=2}B_{qj}$ - finite expansion
+\end{proof}
+
+%%%% end of lecture 3 - TODO: actually fix above 
+
+\begin{lemma}
+  \label{disjoint_countable_union_expansion}
+  Let $A_1, A_2, \dots, A_n \in L$ be semiring.
+  Then there exists pairwise \textbf{disjoint} $B_1, B_2, \dots, B_z \in L$ such that we have finite expansions
+    \[ A_k = \underset{S\in M_k}{\bigcup}B_s, k=1, \dots, n, M_k \subset \{1,2,\dots, t\} \]
+\end{lemma} 
+
+\begin{proof}
+    True for $n=1$.
+    Suppose true for $n=m$, and consider $A_1, A_2, \dots, A_m, A_{m+1}$.
+    Let $B_{s1} = A_{m+1} \cap B_s, s=1,2,\dots, t$
+    then by lemma \ref{finite_union_expansion}
+    \[ A_{m+1} = \bigcup_{s=1}^t B_{s1} \bigcup_{p=1}^N B_p' \]
+
+    By definition of semiring: $B_s = \bigcup_{j=1}^{r_s} B_{sj}$
+    So $A_k = \underset{S\in M_k}{\bigcup}B_s = \underset{S}{\bigcup}\bigcup_{j=1}^{r_s} B_{sj}, k=1,\dots, m$
+    Note that $B_p' \cap B_{sj} = \emptyset$: if $x\in B_p', B_s$ then $x \in B_{S1}$ - contradiction
+\end{proof}
+
+Let $R(L)$ denote the minimal ring generated by the system of sets $L$.
+
+\begin{theorem}
+  If $L$ is a semiring, then $R(L)$ consists of finite expansions $A=\underset{k}{\bigcup} A_k, A_k \in L$.
+\end{theorem}
+
+\begin{proof}
+  Let $\hat{R}$  be the system of finite expansions $A=\underset{k}{\bigcup} A_k, A_k \in L$. We show that $\hat{R}$ is a ring:\\
+
+  \[ \textit{Let } A, B \in \hat{R}; A= \bigcup_{k=1}^m A_k, B=\bigcup_{j=1}^n B_j\]
+  
+  Consider $C_{kj}= A_k \cap B_j$. Since $L$ is a semiring, $C_{kj} \in L$.
+  By lemmas: 
+
+  \[ A_k = \bigcup_{j=1}^n C_{kj} \bigcup_{l=1}^{r_k} D_{kl}, D_{kl} \in L \]
+  \[ B_j = \bigcup_{i=1}^m C_{ij} \bigcup_{p=1}^{s_j} E_{jp}, E_{jp} \in L \]
+  \[ \Rightarrow A \cap B = \bigcup_{i,j} C_{ij} \in \hat{R} \]
+  \[ A \triangle B = (A \cup B) \backslash (A \cap B) = \underset{k,l}{\cup} D_{kl} \underset{j,p}{\cup} E_{jp} \in \hat{R} \]
+
+  So $\hat{R}$ is a ring. It is minimal since finite unions belong to any ring containing $L$
+\end{proof}
+
+\begin{defn}
+  A ring is called a $\sigma$-ring if it contains $\bigcup_{j=1}^\infty A_j$ whenever it contains $A_1, A_2, \dots$.
+  A $\sigma$-ring with a unit is called $\sigma$-algebra.
+  A ring is called a $\delta$-ring if it contains $\bigcap_{j=1}^\infty A_j$ whenever it contains $A_1, A_2, \dots$.
+  A $\delta$-ring with a unit is called a $\delta$-algebra.
+\end{defn}
+
+\begin{theorem}
+  Every $\sigma$-algebra is a $\delta$-algebra and conversly.
+\end{theorem}
+
+\begin{proof}
+  Duality:
+  \begin{align}
+    \bigcup_j A_j = E \backslash \bigcap_j(E\backslash A_j)\\
+    \bigcap_j A_j = E \backslash \bigcup_j(E\backslash A_j)
+  \end{align}
+\end{proof}
+
+For any system $L$ of sets, there exists a $sigma$-algebra containing it:\\
+e.g. $\sigma$-algebra of all subsets of $\underset{A_\alpha \in L} A_\alpha = X$ with unit $X$.
+Consider any $\sigma$-algebra $B$ containing the system $L$. Then $X \subset E$ where $E$ is the unit of $B$.
+
+$B$ is called \textit{irreducible} with respect to $L$ if $X = E$
+
+\begin{theorem}
+    For any nonempty system $L$ of sets there exists unique irredicible w.r.t. $L$ $\sigma$-algebra containing $L$ and contained in any $\sigma$-algebra containing $L$.
+    This is called the minimal $\sigma$-algebra generated by $L$.
+\end{theorem}
+
+\begin{proof}
+    The proof is left as an exercise. %TODO: do the proof
+\end{proof}
+
+\begin{defn}
+  Let $\Omega$ be a topological space. The Borel $\sigma$-algebra $B(\Omega)$ is the minmal $\sigma$-algebra generated by open sets of $\Omega$.
+\end{defn}
+
+\begin{eg}
+  $B(\R)$ is generated by open intervals
+\end{eg}
+
+Open sets in a metric space $R$; $x, x_0 \in R$:
+$\epsilon$-neighbourhood of $x_0$ is the set of points in $R$ s.t. $dist(x, x_0) < \epsilon$
+
+A set $M \subset R$ is called open if each $x \in M$ has an $\epsilon$-neighbourhood in $M$.
+A point $x$ is called a contact point of a set $N\subset R$ is any neighbourhood of $x$ contains a point of $N$.
+A set $N$ is called closed of it contains all its contact points.
+$M$ is open $\Leftrightarrow $ $R \backslash M$ is closed.
+
+\begin{itemize}
+  \item Union of any number of open sets is open
+  \item Intersection of any number of closed sets is closed.
+  \item A finite intersection of open sets is open.
+  \item A finite union of closed sets is closed.
+\end{itemize}
+
+For $\R^1$: Every open set in $\R^1$ is a union of finite or countable number of disjoint intervals.
+
+%% Start of lecture 5 (2h lecture)
+
+\chapter{Measure}
+
+\section{Measure of an ring}
+
+First consider $\R^2$. Consider the semiring $\cL$ of rectangles:
+
+\[ a \leq b; \dots; \emptyset \]
+\[ c \leq d; \dots; \]
+
+\begin{defn}
+  The measure of $P \in \cL$ is defined as $M(P)=(b-a)(d-c)$
+\end{defn}
+
+\begin{note}
+    $M(P) \geq 0, M(\emptyset) = 0$.
+\end{note}
+
+Now extend the definition to $\cR(\cL)$ - minimal ring generated by $\cL$.
+We call elements $A \in \cR(\cL)$ elementary sets.
+
+By \ref{disjoint_countable_union_expansion}
+\[ A = \bigcup_{k=1}^n P_k, P_k \cap P_j = \emptyset \text{ if } k \neq j, P_k \in L, \forall k \]
+- so every $A$ can be expressed as a finite expansion of the $P_k$s.
+
+\begin{defn}[Measure of $A\in \cR(\cL)$]
+  \[ M'(A) = \sum_{k=1}^n M(P_k) \text{, where } A=\bigcup_{k=1}^n P_k \text{ - finite expansion} \]
+\end{defn}
+
+This definition is valid since $M'(A)$ does not depend on the way of expanding it.
+\begin{proof}
+Indeed let $A = \bigcup_{k=1}^n P_k, A = \bigcup_{l=1}^m Q_l$ be finite expansions, then
+\[ P_k = \bigcup_{l} (P_k \cap Q_l); Q_l = \bigcup_k (Q_l \cap P_k) \text{ -finite expansions} \]
+
+\[ \Rightarrow M'(A) = \sum_k M(P_k) = \sum{k,l} M(P_k \cap Q_l) = \sum_l M(Q_l) \]
+\end{proof}
+
+\begin{thm}[Subadditivity]
+  Let $A \in \cR$; $\{ A_j \}, A_j \in \cR$ - finite or countable system; $A \subset \underset{j}{\cup} A_j$
+  Then $M'(A) \leq \sum_j M'(A_j)$ (called \textbf{subadditivity})
+\end{thm}
+
+\begin{proof}
+  Let $\epsilon > 0$. Consider finite expansion $A = \bigcup_{k=1}^l P_k$.
+  Let $\tilde{P}_k \subset P_k, \tilde{P}_k \text{ closed}; \tilde{P}_k \in L; M(\tilde{P}_k) \geq M(P_k) - \frac{\epsilon}{2l}$
+  \[ \text{Then } \tilde{A} = \bigcup_{k=1}^l \tilde{P}_k \subset A; M'(\tilde{A}) \geq M'(A) - \frac{\epsilon}{2l} \;(1)\]
+  Similarly, for each $A_j$, let $\hat{A}_j \in R$ be open and s.t. $M'(\hat{A}_j) \leq M'(A_j) + \frac{\epsilon}{2^{j+1}} \; (2)$ and $A_j \subset \hat{A}_j$
+
+  Note that $\tilde{A} \subset A \subset \underset{j}{\cup} \hat{A}_j$, $\tilde{A}$ closed and bounded and $\hat{A}_j$s are open sets
+
+  Recall that in $\R^n$ a closed and bounded set is compact, i.e. for each cover of it by open sets there exists a finite subcover.
+
+  \[ \Rightarrow \tilde{A} \subset \bigcup_{k=1}^s \hat{A}_{j_k} \Rightarrow M'(\tilde{A}) \leq \sum_{k=1}^s M'(\hat{A}_{j_k}) \]
+
+  \begin{align*}
+      M'(A) &\leq M'(\tilde{A}) + \frac{\epsilon}{2} \\ 
+      &\leq \sum_{k=1}^s M'(\hat{A}_{j_k}) + \frac{\epsilon}{2} \\
+      &\leq \sum_j M'(\hat{A}_j) + \frac{\epsilon}{2} \\
+      &\leq \sum M'(A_j) + \sum_{j=1}^\infty \frac{\epsilon}{2^{j+1}} + \frac{\epsilon}{2} \\
+      &\leq \sum_j M'(A_j) + \epsilon 
+  \end{align*}
+  
+  \[ \Rightarrow M'(A) \leq \sum_j M'(A_j) \text{ since } \epsilon \text{ is arbitrary} \]
+\end{proof}
+
+\begin{corollary}
+ %This *looks* like what it should be, from the proof
+ If $A = \Union_j A_j$ with $A_i \intersection A_j = \emptyset, i \ne j$, then $M'(A) = \sum_j M'(A_j)$.    
+\end{corollary}
+
+\begin{proof}
+  By thm, $M'(A) = M'(\underset{j}{\cup} A_j) \leq \sum_j M'(A_j)$.
+  On the other hand, 
+  \[ M'(A) \geq M'(\bigcup_{j=1}^N A_j) = \sum_{j=1}^N M'(A_j) \]
+  Since $N$ is arbitrary,
+  \[ M'(A) \geq \sum_{j=1}^\infty M'(A_j) \]
+\end{proof}
+
+Extension further:\\
+Consider first sets in $E = \{ 0 \leq x \leq 1; 0 \leq y \leq 1 \}$
+Then $\cR(\cL)$ is an algebra with unit $E$
+
+\section{Measurable sets}
+
+\begin{defn}[outer measure]
+  The outer measure of a set $A \subset R^2$ is
+  \[ \mu^*(A) = \inf_{A\subset \cup_k P_k} \sum_k M(P_k) \]
+  where the $\inf$ is taken over all finite or countable number of rectangles (or elementray sets)
+\end{defn}
+
+\begin{fact}
+  If $A \subset \cR$ then $\mu^*(A) = M'(A)$
+\end{fact}
+
+\begin{proof}
+  \[ A = \bigcup_{k-1}^n P_k \text{ - finite expansion}; M'(A) = \sum_{k=1}^n M(P_k) \]
+  \[ \mu^*(A) \leq \sum_{k=1}^n M(P_k) = M'(A) \]
+  If $A = \cup_j Q_j \in \cL$, $Q_j$ finite or countable
+  then by subadditivity of $M'$
+  \[ M'(A) \leq \sum_j M(Q_j) \Rightarrow M'(A) = \mu^*(A) \]
+\end{proof}
+
+\begin{thm}
+  If $A \subset \cup_n A_n$ - finite or countable, then $\mu^*(A) \leq \sum_n \mu^*(A_n)$ (subadditivity).
+  In particular if $A \subset B$ then $\mu^*(A) \leq \mu^*(B)$
+\end{thm}
+
+\begin{proof}
+  Since $\mu^*$ is inf, there exists $\{ P_{nk} \}$ - finite or countable s.t.
+  \[ A_n \subset \cup_k P_{nk}' \text{ and } \sum_k M(P_{nk}) \leq \mu^*(A_n) + \frac{\epsilon}{2^n} \text{ for any given } \epsilon \]
+  \[ A \subset \cup_{n.k} P_{nk} \Rightarrow \mu^*(A) \leq \sum_{n,k} M(P_{nk}) \leq \sum_n \mu^*(A_n) + \epsilon \]
+\end{proof}
+
+\begin{defn}[Measurable set]
+  A set $A \subset \R^2$ is called measureable (in the Lebesgue sense) if $\forall \epsilon > 0 \exists B \in \cR(\cL)$ s.t. $\mu^*(A\triangle B) < \epsilon$ %TODO: insert pic here
+  $\mu^*$ restricted to measurable sets is called the measure - we denote it by $\mu$.
+\end{defn}
+Note that if $A \in \cR$, $\mu(A) = M'(A)$
+
+\begin{thm}
+  The system $M(E)$ of measurable sets in $E$ is an algebra with unit $E$
+\end{thm}
+
+\begin{proof}\;\
+  \begin{enumerate}
+    \item $E$ is measurable.
+    \item If $A \in M(E)$ then $E \backslash A \in M(E)$ - because $(E\backslash A)\triangle(E\backslash B) = A \triangle B$
+    \item Let $A_1, A_2 \in M(E)$ Fix $\epsilon > 0$. Let $B_1, B_2 \in R$ be s.t. $\mu^* (A_1 \triangle B_1) < \frac{\epsilon}{2}$
+
+  \end{enumerate}
+
+\end{proof}
+
+\begin{thm}
+  The system $M(E)$ of measurable sets is a $\sigma$-algebra.
+\end{thm}
+
+\newcommand{\mustar}{\mu^{*}}
+
+\begin{proof}
+  Let $A_1, A_2, \dots \in M(E), A = \union_{j=1}^\infty A_j$.
+
+  Let $A_1' = A_1, A_n' = A_n \backslash \union_{j=1}^{n-1} A_j, n = 2,3 \dots$.
+
+  Then $A_j' \intersection A_k' = \emptyset, j \neq k$ and $A = \union_{j = 1}^{\infty} A_j'$.
+
+  By theorem 3, $A_n' \in M, n = 1, 2, \dots$.
+
+  \begin{align*} 
+    \sum_{k=1}^n \mu(A_k') &= \mu(\union_{k=1}^n A_k') &\text{by theorem 4} \\
+      &\leq \mustar(A) & \text{by subadditivity} \\
+      & \implies \sum_{k = 1}^{\infty} \mu(A_k') \text{ converge} \\
+  \end{align*}
+
+  Therefore $\forall \epsilon > 0$, $\exists N \text{ s.t. } \sum_{k=N}^{\infty} \mu(A_k') < \frac{\epsilon}{2}$.
+
+  Since $\union_{k=1}^{n}A_k'$ is measurable, and $\exists \text{ elementary set } B \text{ s.t. }$
+
+  $$ \mu(\union_{k=1}^nA_k' \triangle B) < \frac{\epsilon}{2}, n = N-1$$
+
+  Since $$ A \triangle B \subset (\union_{k=1}^n A_k' \triangle B) \union (\union_{k=n+1}^\infty A_k') $$
+  then $$ \mustar (A \triangle B) \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon $$
+  So A is measurable.
+\end{proof}
+
+\begin{thm}
+  Let $A_1, A_2, \dots \in M(E), A_j \intersection A_k = \emptyset, j \neq k$.
+  Then $$ \mu( \union_{n=1}^\infty A_n) = \sum_{n=1}^\infty \mu(A_n) \text{ - $\sigma$-additivity} $$
+\end{thm}
+
+\begin{proof}
+  Note that $A = \union_{n=1}^\infty A_n \in M(E)$ by the previous theorem.
+
+  By subadditivity, $\mu(A) \leq \sum_{n=1}^\infty \mu(A_n)$.
+  On the other hand, $\sum_{n = 1}^k \mu(A_n) = \mu(\union_{n=1}^k A_n) \leq \mu(A)$ for any $k$.
+
+  Therefore $$ \sum_{n=1}^\infty \mu(A_n) \leq \mu(A) $$
+\end{proof}
+
+From $\sigma$-additivity follows the property of continuity of $\mu$:
+
+\begin{thm}\label{convergence_of_sets_in_measure}
+    Let $A_1 \supset A_2 \supset \dots, A_1, A_2, \dots \in M(E); A = \intersection_{n=1}^\infty A_n$.
+
+    Then $\mu(A) = \lim_{n \rightarrow \infty} \mu(A_n)$.
+\end{thm}
+
+\begin{proof}
+    It is sufficient to consider $A = \emptyset$ (otherwise $A_n \iff A_n \backslash A$).
+
+    Note: $$ A_1 = (A_1 \backslash A_2) \union (A_2 \backslash A_3) \dots, $$
+    $$ A_n = (A_n \backslash A_{n+1}) \union \dots$$
+    
+    Since components are disjoint, by $\sigma$-additivity.
+    $$ \mu(A_1) = \sum_{k=1}^\infty \mu(A_k \backslash A_{k+1}) $$
+    and as the sum converges,
+    $$ \mu(A_n) = \sum_{k=n}^\infty \mu(A_k \backslash A_{k+1}) \rightarrow 0$$
+    as $n \rightarrow \infty$.
+\end{proof}
+
+\begin{corollary}
+  Let $A_1 \subset A_2 \subset A_3 \subset \dots, A_1, A_2, \dots \in M(E); A = \union_{k=1}^\infty A_k$. Then
+
+    $$ \mu(A) = \lim_{n \rightarrow \infty} \mu(A_n)$$.
+\end{corollary}
+
+\begin{proof}
+    Apply \ref{convergence_of_sets_in_measure} to $E \backslash A_n$.
+\end{proof}
+
+\begin{fact}
+  Let $A \subset E$ be such that $\mustar(A) = 0$. Then $A \in M(E)$ and any $B \subset A$ is also measurable.
+\end{fact}
+
+\begin{proof}
+  Indeed, since $\emptyset \in \cR(\cL)$, then $\mustar(A \triangle \emptyset) = \mustar(A) = 0 < \epsilon$ for any $\epsilon > 0$.
+  Thus, $A$ is measurable. If $B \subset A$, then
+  $$ \mustar(B) \leq \mustar(A) = 0 \implies \mustar(B) = 0$$
+  so $B$ is measurable.
+\end{proof}
+
+Note that any set $O \subset E$ is measurable. Indeed, $$ O = \union_n \left\{ P (z, \frac{1}{n}), z \in \Q^2, n \in Z_{+}, P(z, \frac{1}{n}) \subset O \right\} $$
+
+$P(z, \frac{1}{2})$ is a fancy rectangle diagram (see Kyle's drawing).
+
+$P(z, \frac{1}{2}) \in M(E)$, the union is countable!
+
+Therefore any closed subset of $E$ (complement of open) and countable intersection of open and closed sets, is measurable.
+
+But $M(E)$ contains some other sets as well! Let us take the extension to $\R^2$:
+$$ \R^2 = \union_{m, n} E_{m, n}, E_{m, n} = \begin{cases} 
+    m \leq x < m + 1 \\
+    n \leq y < n + 1 
+  \end{cases} $$
+
+\begin{defn}
+  A set $A \subset \R^2$ is called measurable if $A_{m, n} = A \intersection E_{m,n}$ are all measurable and
+  $$ \mu(A) = \sum_{m, n} \mu(A_{m, n}) $$
+  so $M(\R^2)$ is the $\sigma$-algebra of measurable subsets of $R^2$.
+\end{defn}
+
+Note, in particular, that $\mu(\R^2) = +\infty$. All properties of $\mu$ are as before, except \ref{convergence_of_sets_in_measure} where we must impose the condition $\mu(A_1) < \infty$ for the theorem to hold. (Exercise: find a counterexample if $\mu(A_1) = +\infty$).
+
+Note that the Borel $\sigma$-algebra $B(\R^2) \subset M(\R^2)$.
+
+\begin{defn}
+  We define the Lebesgue measure on $\R^1$.
+
+  \begin{enumerate}
+    \item $\cL$ is the semiring of intervals $(a, b), [a, b), [a, b], (a, b], \emptyset, \{ a \} = [a, a]$, and $m(I_{a,b}) = b -a$.
+    \item If $A \in \cR(\cL)$, then $$ A = \Union_{j=1}^n I_j, I_j \intersection I_k = \emptyset, j \neq k $$ and $I_j \in L$. Then consider the sets in $[0, 1]$.
+    \item The outer measure is $$ \mustar(A) = \mustar(\Union_{I_n \subset A}^\infty I_n) = \sum_{n} \mu(I_n) $$
+    \item $A \subset [0, 1]$ is measureable if $\forall \epsilon > 0 \exists B \subset R(L)$ s.t. $\mustar (A \triangle B) < \epsilon$.
+  \end{enumerate}
+
+  Then the Lebesgue measure is the restriction of $\mustar$ to measurable sets.
+\end{defn}
+
+As a result, we can obtain the Lebesgue measure on $\R$. This measure is $\sigma$-additive.
+
+First, we define the Lebesgue-Stieltjes on $\R$ - let $F(G): \R \rightarrow \R$ be a non-decreasing, continuous-on the left function, i.e. $$ \lim_{\epsilon \rightarrow 0} F(t - \epsilon) = F(t), \forall t $$
+
+Let $\mu(a, b) = F(b) - F(a + \epsilon)$, for $\epsilon$ small, and 
+
+\begin{align*}
+    \mu[a, b] &= F(b + \epsilon) - F(a - \epsilon) \\
+              &= F(b + \epsilon) - F(a)
+\end{align*}
+
+Note that $\mu \ge 0$, and $\mu$ is additive (check this!): then we proceed as before. As a result, the measure obtained in this way is called the Lebesgue-Stieltjes measure $\mu_F$ on $\R$, and it is $\delta$-additive. If, in fact $F(t) = t$, the resulting measure is the Lebesgue measure.
+
+\begin{eg}
+  For $\mu_F$, Borel sets are measurable - so the above is true!. Consider a non-measurable set $C$, the unit circle. Consider the $\sigma$-additive measure constructed from $L$ as the semiring of segments of $C$, where $\mu$ is the length of a segment.
+
+  Let $a$ be irrational. Then rotation by the angle $\pi a$ is an equivalence relation on $C$, and $$ K_{Z_0} = \{ z \in C : Z = Z_0 e^{i\pi n}, n \in \Z \} $$
+
+    Then $Z_{0}$ in $C$ are equivalence classes. Select one point from each class, and call the resulting set $\Phi_{0}$. It is sufficient to show that $\Phi_0$ is not measurable.
+
+    Let $\phi_n$ be the set formed by rotation of $\phi_0$ by $\pi a n$. Then $\phi_j \intersection \phi_k = \emptyset$ if $0 \ne k$, and $\Union_{n = -\infty}^\infty \phi_n = C $. Suppose that $\phi_0$ was measurable - then each $\phi_n$ would also be measurable, with $m$ some measure. Then by additivity, $$ \sum_{n = -\infty}^\infty m(\phi_n) = \mu(C) = 2\pi $$ but they all have the same measure, which does not allow for the infinite sum - this gives our contradiction.
+\end{eg}
+
+In the general construction: Let $\cL$ be a semiring.
+
+\begin{defn}
+    A function $m$ on the sets of $\cL$ is called a measure if $m(A) \ge 0$, $A \in \cL$, and it is additive, i.e. If $A_1, A_2, \dots A_n, A \in \cL$, and $$ A = \Union_{k=1}^n A_k, A_k \intersection A_j = \emptyset, j \ne k $$ then $$ m(A) = \sum_{k=1}^n m(A_k) $$
+\end{defn}
+
+Let $m$ be a measure on $\cL$, then we can extend it to the semiring $\cR(\cL)$ - $\forall A \in \cR(\cL)$, we can write $$ A = \Union_{k=1}^n A_k, A_k \in \cL $$ pairwise disjoint, so $m'(A) = \sum_{k=1}^n m(A_k)$ is well-defined, and the proof is as before. This occurs because $\cL$ is a semiring.
+
+\begin{lemma}
+  If $m$ is $\sigma$-additive on $\cL$, then its extension $m'$ is $\sigma$-additive on $\cR(\cL)$.
+\end{lemma}
+
+\begin{proof}
+    As a hint of the proof - let $$ A = \Union_{n=1}^\infty B_n, B_n, A \in \cR(\cL) $$ and consider simple expansions $A = \Union_j A_j, B_n = \Union_k B_{nk}, A_j, B_{nk} \in \cL$ and set $C_{jnk} = A_j \intersection B_{nk}$.
+\end{proof}
+
+Now assume $m$ is $\sigma$-additive.
+
+\begin{eg}
+  There exist examples of non-$\sigma$-additive measures. Let $L$ be the semiring of sets which are intersections of $\Q$ with intervals $(a, b), [a, b), \dots$ in $[0, 1]$.  Define $m(A_{a, b}) = b - a$.
+
+    Then $m$ is additive but not $\sigma$-additive: consider 
+    $$ A = \Q \intersection [0,1] = \Union_{k = 1}^\infty B_k $$
+    where $B_k = A_{q_k, q_k}$ and $q_k$ is the k-th element of $\Q$ (by its countability).
+
+    Then $m(B_k) = q_k - q_k = 0$ for all $k$, and
+    $$ m(\Union_{k=1}^n B_k) = \sum_{k=1}^n m(B_k) = 0 $$
+    by additivity, but
+    $$ m(\Union_{k=1}^\infty B_k) = m(A) = 1 - 0 = 1 $$
+\end{eg}
+
+\begin{note}\;\
+  \begin{enumerate}
+    \item{ $\sigma$-additivity of $m'$ implies that $\mustar(A) = m'(A)$ if $A \in \cR(\cL)$. }
+    \item{ $\mustar$ is subadditive, i.e. if $A \subset \union_n A_n$ then $\mustar(A) \le \sum_n \mustar(A_n)$. }
+  \end{enumerate}
+\end{note}
+
+\begin{defn}
+    A set $A \subset E$ is called measurable if $\forall \epsilon > 0, \exists B \in R(L)$ s.t. $\mustar(A \triangle B) < \epsilon$. 
+
+  $\mustar$ restricted to measurable sets is called the measure $\mu$.
+\end{defn}
+
+Note that $\mu$ coincides with $m'$ on $R$ and so is called the Lebesgue extension of $m'$ to measurable sets. The system of measurable sets is a $\sigma$-algebra and $\mu$ is $\sigma$-additive on it.
+
+So far we have only considered $E \in L$, E is a unit, where $\mu(E) < \infty$. However, we can extend further.
+
+%TODO: Power set notation
+Fix a set $X$ with its associated semiring $\cL \subset 2^X$ and measure $\mu$.
+
+\begin{defn}
+  $\mu$ is called $\sigma$-finite if there exist sets $B_n \in \cL$ pairwise disjoint with $\mu(B_n) < \infty$ and 
+  $$ X = \Union_{n=1}^\infty B_n $$
+\end{defn}
+    
+Assume $X$ is $\sigma$-finite. Then the system $M$ of measurable sets $A \subset X$ are those s.t. $A \intersection B_j = A_j$ is measurable $\forall j$, with $A = \Union_j A_j$.
+
+The system of such sets is a $\sigma$-algebra (check!), and we define $$\mu(A) = \sum_j \mu(A_j)$$ So $\mu$ is finite or $+\infty$. Note that the definition of $\mu$ does not depend on the choice of $B_n$'s (we omit the proof); and $\mu$ is $\sigma$-additive on $M$.
+
+From $\sigma$-additivity, we obtain continuity:
+\begin{enumerate}
+  \item{ $$ A_1 \supset A_2 \supset \dots, \mu(A_1) < \infty, A_j \in M $$ Then $\mu(\Intersection_{j=1}^\infty A_j) = \lim_{n \rightarrow \infty} \mu(A_n)$. }
+  \item{ $$ A_1 \subset A_2 \subset \dots, A_j \in M $$ Then $\mu(\Union_{j=1}^\infty A_j) = \lim_{n \rightarrow \infty} \mu(A_n)$.}
+\end{enumerate}
+
+\section{Measure spaces}
+
+In general,
+
+\begin{defn}
+    A measure space is a triple $(X, B, \mu)$, where $X$ is a set, $B$ is a $\sigma$-algebra with $B \subset 2^X$, and $\mu$ is a non-negative function (which can take the value $+\infty$) on $B$ s.t. $\mu(\emptyset) = 0$, $\mu$ is $\sigma$-additive, i.e.
+    $$ \mu (\Union_{n=1}^\infty A_n) = \sum_{n=1}^\infty \mu(A_n) \text{ for $A_n \in B$ pairwise disjoint} $$
+
+    Then $\mu$ is called a ($\sigma$-additive) measure on $B$.
+\end{defn}
+
+\begin{defn}
+  A measure $\mu$ is called complete if from $\mu(A) = 0$, $A' \subset A$ it follows that $A'$ is measurable, and clearly $\mu(A') = 0$.
+\end{defn}
+
+\begin{fact}
+  The Lebesgue extension of a measure is complete - indeed, if $\mu(A) = 0$, then for all $A' \subset A, \mustar(A') \leq \mustar(A) = \mu(A)= 0$, i.e. $\mustar(A') = 0$, and any set of zero outer measure is measurable.
+
+  This last statement follows from a similar argument as to that for $\R$.
+\end{fact}
+
+\begin{fact}
+  Any measure can be extended to a complete measure by setting the measure $\mu(A') = 0$ for any $A' \subset A$ where the measure $\mu(A) = 0$.
+\end{fact}
+
+\begin{eg}
+  Let $\tilde{\mu}$ be the Lebesgue measure on $\R$ considered on $B(\R)$. Then it is not complete, because there exist non-Borel subsets of a Borel set of zero measure. After completion in the above way, $\tilde{\mu}$ becomes the Lebesgue measure.
+\end{eg}
+
+\begin{lemma}
+  The Lebesgue extension of a $\sigma$-additive measure to $M$ from $\cR(\cL)$ is the unique $\sigma$-additive extension.
+\end{lemma}
+
+\begin{proof}
+  Let $\mu_1$ be the Lebesgue extension to $M$, and $\mu_2$ be any $\sigma$-additive measure on $M$, s.t. $\mu_2(A) = \mu_1(A)$ if $A \in \cR(\cL)$.
+
+    Note that $\mu_2(A) \leq \mustar(A), A \in M$ - this follows from subadditivity. If $A \subset \Union_{j=1}^\infty A_j$, then $\mu_2(A) \leq \sum_{j=1}^\infty \mu_2(A_j)$
+    
+    Subadditivity, in turn, follows from $\sigma$-additivity: let $$ C_n = (A \intersection A_n) \backslash \Union_{j=1}^{n-1} A_k$$ so $C_n$'s are pairwise disjoint, and $A = \Union_{n=1}^\infty C_n, C_n \subset A_n$, hence $\mu_2(A) = \sum_n \mu_2(C_n) \leq \sum_n \mu_2(A_n)$.
+
+    If $A \in M$, then $\forall \epsilon > 0 \exists B \in \cR(\cL)$ s.t. $\mustar(A \triangle B) < \epsilon$. We have that 
+    \begin{itemize}
+        \item $\mu_1(A \triangle B) = \mustar(A \triangle B) < \epsilon$, as $\mu_1$ is the Lebesgue extension.
+        \item $\mu_2(A \triangle B) \leq \mustar(A \triangle B) < \epsilon$
+    \end{itemize}
+
+
+    And so $\abs{\mu_j(A) - m(B)} < \epsilon, j = 1, 2$, and by the triangle inequality $\abs{\mu_1(A) - \mu_2(A)} < 2\epsilon$.
+
+    Since our choice of $\epsilon$ was arbitrary, $\mu_1(A) = \mu_2(A)$.
+\end{proof}
+
+\section{Measureable functions}
+
+\begin{defn}
+   Let $X, Y$ be sets, and $L_X, L_Y$ be some systems of their subsets. A function $f: X \rightarrow Y$ is called $(L_X, L_Y)$ measurable if the pre-image of any set in $L_Y$ is a set in $L_X$.
+\end{defn}
+
+\begin{eg}
+  \begin{enumerate}
+    \item $X = Y = \R$, where $L_X, L_Y$ are the systems of all open sets. Then $f$ is $(L_X, L_Y)$ measurable means $f$ is continuous - the pre-image of any open set being an open set is exactly the definition of continuity.
+    \item $X = Y = \R$, where $L_X, L_Y$ are the systems of all Borel sets. Then if $f$ is $(L_X, L_Y)$ measurable, f is called a Borel function.
+  \end{enumerate}
+\end{eg}
+
+\begin{defn}
+  Let $(X, M, \mu)$ be a measure space. A function $f: X \rightarrow \R$ taking values on the real line is called $\mu$-measurable (or simply measurable) if the pre-image of any Borel set $A$ in $\R$,  is a measurable set in $X$ i.e. $f^{-1}(A) \in M$.
+\end{defn}
+
+\begin{thm}
+    Let $X, Y, Z$ be sets, and $L_X, L_Y, L_Z$ be some systems of their subsets. If we have two functions $f: X \rightarrow Y$ which is $(L_X, L_Y)$ measurable and $g: Y \rightarrow Z$ which is $(L_Y, L_Z)$ measurable, then their composition $g * f : X \rightarrow Z$ is $(L_X, L_Z)$ measurable.
+\end{thm}
+
+\begin{corollary}
+  A Borel function of a $\mu$-measurable function is $\mu$-measurable. A continuous function of a $\mu$-measurable function is $\mu$-measurable.
+\end{corollary}
+
+\begin{proof}
+  Indeed, for a continuous function $g$, then $g^{-1}(B(\R))  = g^{-1}(B(N))$, where $N$ is the system of open sets in $\R$.Then this is equivalent to $B(g^{-1}(N))$ (the result is in an exercise), and the pre-image of an open set is open under $g$ by continuity, so $B(g^{-1}(N)) = B(N) \subset B(\R)$.
+\end{proof}
+
+\begin{thm}
+  Let $f: X \rightarrow \R$ be measurable. Then $\forall c \in \R$, the set $\{ x \in X : f(x) < c \}$ is measurable. 
+    
+  Conversely, if $\forall c \in \R$, the set $\{ x \in X : f(x) < c \}$ is measurable, then $f$ is measurable.
+\end{thm}
+
+\begin{proof}
+    The first statement is obvious.
+
+    Let $N$ be the system of sets $\{ y \in \R  : y < c \}, \forall c$. Then note that $B(N) = B(\R)$, and
+    $$ f^{-1}(B(\R)) = f^{-1}(B(N)) = B(f^{-1}(N)) \subset M $$
+    if the sets $\{ x \in X : f(x) < c \}$ are measurable.
+\end{proof}
+
+\begin{thm}\;\
+  Suppose that we have measurable functions $f, g: X \rightarrow \R$. Then
+  \begin{itemize}
+    \item $a * f, a \in \R$
+    \item $f + g$
+    \item $f - g$
+    \item $f * g$
+    \item $f / g$, $g \ne 0$
+  \end{itemize}
+  are all measurable.
+\end{thm}
+
+\begin{proof}
+  \begin{enumerate}
+    \item Clearly $a*f$, $f + a$ are measurable, by considering $\{ x \in X : a*f(x) < a*c \}$ and similar.
+    \item The set $\{ x : f(x) > g(x) \} = \Union_{n=1}^\infty \{x : f(x) > r_n \} \intersection \{ x : g(x) < r_n \}$ where $r_n \in \Q$. Then these two intersection sets are measurable (by the measurability of $f, g$), and the result is a countable union, clearly in the $\sigma$-algebra.
+
+      Then $\{ x : f(x) > a + (-1)g(x) \} = \{ x : f(x) + g(x) > a \} \forall a $, and so $f + g$ is measurable.
+    \item $f - g = f + (-1)g$, so it is clearly measurable.
+    \item $f * g = \frac{1}{4} ((f + g)^2 - (f - g)^2)$ - this is measurable by the previous statements and the property that $y(x) = x^2$ is a continuous function.
+    \item Let $f(x) \ne 0$. Then $\frac{1}{f}$ is measurable.
+
+        Indeed, if
+        \begin{align*}
+            c > 0,& \{x : \frac{1}{f} < c \} = \{x : f > \frac{1}{c} \} \union \{ x : f < 0 \} \\
+            c < 0,& \{x : \frac{1}{f} < c \} = \{x : 0 > f > \frac{1}{c} \} \\
+            c = 0,& \{x : \frac{1}{f} < c \} = \{x : f < 0\} \\
+        \end{align*}
+        and these sets are all measurable.
+    \item Then $\frac{f}{g} = f * \frac{1}{g}$ is measurable if $g \neq 0$.
+  \end{enumerate}
+\end{proof}
+
+\section{Sequences of functions}
+
+\begin{thm}
+  \label{limit_of_seq_of_measurable_functions_is_measurable}
+  The limit of a pointwise-converging sequence of measurable functions is a measurable function.
+\end{thm}
+
+\begin{proof}
+  Let $f_n(x) \rightarrow f(x), n \rightarrow \infty, \forall x \in X$, $f_n$ are measurable.
+
+  We can express the set $\{ x : f(x) < c \}$ as $$\{ x : f(x) < c \} = \Union_{k} \Union_{n} \Intersection_{m > n} \{ x : f_m(x) < c - \frac{1}{k} \}, c \in R$$
+  Indeed, if $f(x) < c$, then $\exists k$ s.t. $f(x) < c - \frac{2}{k}$, and for this $k, \exists n$ s.t. $\forall m > n, f_m(x) < c - \frac{1}{k}$.
+
+    Conversely, let $x$ belong to the r.h.s. Fix $k$. Then, for all sufficiently large $m$, we have that $f_m(x) < c - \frac{1}{k}$ and clearly $f(x) < c$.
+
+    Since the sets $\{ x : f_m(x) < c - \frac{1}{k} \}$ are all measurable, $\{ x : f(x) < c \}$ is certainly measurable, and so $f$ is measurable.
+\end{proof}
+
+% Start of lecture 11
+
+From here on, we assume that $\mu$ is complete, so any subset of a set of zero measure is measurable.
+
+\begin{defn}
+ Two functions $f, g$ on a measurable set $E$ are called equivalent, denoted $f \sim g$, if $\mu(\{ x : f(x) \ne g(x)\}) = 0$.
+
+  We say that a property holds almost everywhere (a.e.) on $E$ if it holds for all except possibly for points which form a measurable set of measure 0. So two functions are equivalent if they agree a.e.. 
+\end{defn}
+
+\begin{lemma}
+  If $f$ is given on a measurable set $E$, $f \sim g$, and $g$ is measurable on $E$, then $f$ is measurable.
+\end{lemma}
+
+\begin{proof}
+  Since $\mu$ is complete and $f \sim g$, the sets $\{ x : f(x) < c \}, \{ x : g(x) < c \}$ can differ only on a set of measure 0, and if one of them is measurable, so is the other.
+\end{proof}
+
+\begin{eg}
+  Consider $f, g : \R \rightarrow \R$.
+
+  Note that if $f \sim g$ and $f, g$ are continuous, then $f = g$. Indeed, if $f(x_0) \ne g(x_0)$ for some $x_0$, then $f, g$ are not equal on a neighbourhood of $x_0$, and so are not equal on a set of non-zero Lebesgue measure.
+\end{eg}
+
+In general, $f \sim g$ does not imply $f = g$. For example,
+$$ f(x) = \begin{cases}
+    1, &x \text{ rational} \\
+    0, &x \text{ irrational}
+  \end{cases} $$ is equivalent to $g \equiv 0$.
+
+\begin{defn}
+  A sequence of functions $f_n : X \rightarrow \R$ is called convergent a.e. to a function $f$ if $f_n(x) \rightarrow f(x)$ a.e. on X as $n \rightarrow \infty$. 
+\end{defn}
+
+\begin{eg}
+  The sequence $f_n(x) = (-x)^n$ converges a.e. on $[0, 1]$ to $0$ - except, of course, on the point $x = 1$.
+\end{eg}
+
+\begin{thm}\label{limit_of_ae_measurable_sequence_is_measurable}
+  If a sequence of measurable functions $f_n : X \rightarrow \R$ converges a.e. on $X$ to $f: X \rightarrow \R$, then $f$ is measurable.
+\end{thm}
+
+\begin{proof}
+  Let $f_n(x) \rightarrow f(x)$, for $x \in A \subset X$, with $\mu(X \backslash A) = 0$.
+
+  We note that any measurable function on a set of zero measure is measurable - by the completeness of $\mu$.
+
+  Thus, $f$ is measurable on $X \backslash A$. It is also measurable on $A$, by theorem \ref{limit_of_seq_of_measurable_functions_is_measurable}.
+
+  Then the sets $$ \{ x \in A : f(x) < c \}, \{ x \in X \backslash A : f(x) < c \} $$ are measurable, and it follows that the set $\{ x \in X : f(x) < c \}$ is measurable, giving the measurability of $f$.
+\end{proof}
+
+\begin{thm}
+    Let $E$ be a set of finite measure - and let $f_n(x)$ be a sequence of measurable functions converging a.e. on $E$ to $f(x)$. 
+
+    Then $\forall \delta > 0$ there exists a measurable set $E_\delta \subset E$ s.t. 
+    \begin{enumerate}
+        \item $\mu(E_\delta) > \mu(E) - \delta$
+        \item $f_n \rightarrow f$ uniformly on $E_\delta$.
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    By theorem \ref{limit_of_ae_measurable_sequence_is_measurable}, $f(x)$ is measurable.
+
+    Consider $$ E_n^m = \Intersection_{j \ge n} \{ x \in E : \abs{f_j(x) - f(x)} < \frac{1}{m} \} $$ for fixed $m, n$, this is the set of points where $\abs{f_j(x) - f(x)} < \frac{1}{m}$, $\forall j \ge n$. We note that $E_1^m \subset E_2^m \subset \dots$.
+
+  Let $E^m = \Union_{n=1}^\infty E_n^m$. Since $\mu$ is $\sigma$-additive, it is continuous, so $\forall \delta$ there exists $n_0(m) $ s.t. $$\mu(E^m \backslash E_{n_0}^m) < \frac{\delta}{2^m}$$
+
+  Let $E_\delta = \Intersection_{m=1}^\infty E_{n_o(m)}^m$ - we claim that this is exactly the set from the statement of the theorem. Indeed,
+
+    \begin{enumerate}
+        \item If $x \in E_\delta$, then $\forall m, \abs{f_j(x) - f(x)} < \frac{1}{m}$, for all $j \ge n_0(m)$. Then we have that $f_n \rightarrow f$ on $E_\delta$, and as none of the parameters of the convergence depend on the value of $x$, the convergence is uniform.
+        \item To show the closeness of the measure, we first note that $\forall x \in E \backslash E^m$, $f_n(x)$ does not converge to $f(x)$ - because there exist arbitrary large $j$s s.t. $\abs{f_j(x) - f(x)} \ge \frac{1}{m}$. Therefore, $\mu(E \backslash E^m) = 0$, since $f_n \rightarrow f$ a.e. by assumption.
+
+            Then $$ \mu(E \backslash E_{n_0(m)}^m) = \mu(E^m \backslash E_{n_0(m)}^m) < \frac{\delta}{2m} $$ as was shown above, and $$ \mu(E \backslash E_\delta) = \mu(E \backslash \Intersection_m E_{n_0(m)}^m) = \mu(\Union_m (E \backslash E_{n_0(m)}^m)) < \sum_m \frac{\delta}{2^m} = \delta $$
+    \end{enumerate}
+\end{proof}
+
+\begin{defn}
+    A sequence of measurable functions $f_n : X \rightarrow \R$ is said to converge to some function $f$ in measure if $\forall \delta > 0$, then $$ \lim_{n \rightarrow \infty} \mu(\{ x \in X : \abs{f(x) - f_n(x)} \ge \delta \}) = 0 $$
+\end{defn}
+
+This is a weaker convergence than convergence a.e.. In particular, it means that the following theorem holds
+
+\begin{thm}
+  Let $\mu(E) < \infty$, and $f_n$ be measurable functions on $E$.
+
+  If $f_n \rightarrow f$ a.e. on $E$, then $f_n \rightarrow f$ in measure.
+\end{thm}
+
+\begin{proof}
+  Note that, as the limit of a converging a.e. sequence, $f$ is measurable. Let $A = \{ x \in E : f_n(x) \not \rightarrow f(x) \}$ - we have that $\mu(A) = 0$, by definition.
+
+    Let $\delta > 0, E_k(\delta) = \{ x : \abs{f_k(x) - f(x)} \ge \delta \}$. We introduce the union $$ R_n(\delta) = \Union_{k=n}^\infty E_k(\delta) $$
+
+    Then we have that $R_1(\delta) \supset R_2(\delta) \supset \dots$. Let $ M_\delta = \Intersection_{n=1}^\infty R_n(\delta)$. Then $\mu(R_n(\delta)) \rightarrow \mu(M_\delta)$, as $n \rightarrow \infty$, since $\mu(E) < \infty$. Note that $M_\delta \subset A$ - indeed, if $x \not \in A$, then $\exists n$ s.t. $\abs{f_k(x) - f(x)} < \delta, k \ge n$. So then $x \not \in R_n(x)$, and $x \not \in M_\delta$.
+
+    Therefore, $\mu(M_\delta) = 0$ by $\mu(A) = 0$, so $\mu(R_n(\delta)) \rightarrow 0$ as $n \rightarrow \infty$. Since our original set $E_n(\delta) \subset R_n(\delta)$, and so $\mu(E_n(\delta)) \rightarrow 0$ as $n \rightarrow \infty$. But this is exactly the definition of convergence in measure, and it is independent of the choice of $\delta$.
+\end{proof}
+
+% Start of lecture 12
+
+We note that it is possible to find sequences of functions that converge in measure, but do not converge a.e. Indeed,
+
+\begin{eg}
+    Let 
+    $$f_j^{(k)}(x) = \begin{cases}
+        1, &\frac{j-1}{k} < x \le \frac{j}{k} \\
+        0, &\text{ otherwise},
+        \end{cases} j = 1, 2, \dots, k$$
+    where $k = 1, 2, \dots$ and $x \in (0, 1]$.
+
+    Consider the sequence 
+    $$f_1^{(1)}, f_1^{(2)}, f_2^{(2)}, \dots, f_1^{(k)}, f_2^{(k)}, \dots, f_k^{(k)}, \dots$$
+    It does not converge at any point, but converges to 0 in measure.
+\end{eg}
+
+\begin{thm}
+    Let $\mu(E) < \infty$, and take $f_n(x) \rightarrow f(x)$ in measure.
+
+    Then there exists a subsequence $(n_k)$ of $(n)$ s.t. $f_{n_k}(x) \rightarrow f(x)$ a.e.
+\end{thm}
+
+\begin{proof}
+    Let $\epsilon_j > 0, j = 1, 2, \dots$ such that $\epsilon_j \rightarrow 0, j \rightarrow \infty$, and $\eta_j > 0, j = 1, 2, \dots$ such that $\sum_{j=1}^\infty \eta_j$ converge.
+
+    Choose a sequence of indices $n_1, n_2, \dots$ as follows:
+    \begin{itemize}
+        \item $n_1$ is such that 
+            $$\mu(\{ x : \abs{f_{n_1}(x) - f(x)} \ge \epsilon_1\}) < \eta_1$$
+        \item $n_2$ is such that 
+            $$\mu(\{ x : \abs{f_{n_2}(x) - f(x)} \ge \epsilon_2\}) < \eta_2$$
+        \item and so on
+    \end{itemize}
+
+    This choice is possible by the property of convergence in measure - that
+    $$ \forall \delta > 0, \lim_{n \rightarrow \infty} \mu(\{ x : \abs{f_n(x) - f(x)} \ge \delta\}) = 0$$
+    We now need to show that $f_{n_k} \rightarrow f$ a.e.
+
+    Let
+    $$ R_j = \Union_{k=j}^\infty \{ x : \abs{f_{n_k}(x) - f(x)} \ge \epsilon_k\} $$
+    and note that $R_1 \supset R_2 \supset \dots$. Define $Q = \Intersection_{j=1}^\infty R_j$, and we see that
+    $$ \mu(R_j) \rightarrow \mu(Q), j \rightarrow \infty $$
+
+    But $\mu(R_j) \le \sum_{k=j}^\infty \eta_k \rightarrow 0, j \rightarrow \infty$ as the series converge by the construction of $\eta_k$.
+
+    So $\mu(Q) = 0$. Let $x_0 \in E \backslash Q$ - then for some $j$, $x \not \in R_j$, so $\abs{f_{n_k}(x_0) - f(x_0)} < \epsilon_k, \forall k \ge j$. Since $\epsilon_k \rightarrow 0$, $f_{n_k}(x_0) \rightarrow f(x_0)$.
+\end{proof}
+
+\chapter{Integrals}
+
+\section{Simple functions}
+
+From now on we consider $(X, M, \mu)$ to be $\mu-complete$ with $f : X \rightarrow \R$. 
+
+First we assume that $\mu(X) < \infty$.
+
+\begin{thm}
+    A function $f$ taking at most countably many values $y_1, y_2, \dots$ is measurable if and only if all sets $A_k = \{ x : f(x) = y_k \}, k = 1, 2, \dots$ are measurable.
+\end{thm}
+
+\begin{proof}
+    Assume $f$ is measurable - it is clear that the sets $A_k$ are measurable, as $\{y_k\}$ are Borel sets, and their preimages in $f$ are measurable.
+
+    Now let $A_k, k = 1, 2, \dots$ be measurable, and $B$ be a Borel set.
+
+    Then $f^{-1}(B) = \Union_{y_k \in B} A_k$ is a union of measurable sets, and is so measurable.
+\end{proof}
+
+\begin{defn}
+    A measurable function $f$ which takes at most countably many values is called simple.
+\end{defn}
+
+\begin{thm}
+    A function $f$ is measurable if and only if there exists a sequence of simple functions $f_n$ which converges to $f$ uniformly.
+\end{thm}
+
+\begin{proof}
+    Assume there exists such a sequence. Then the limit of a convergent sequence of measurable functions is also measurable.
+
+    Conversely, let $f$ be measurable.
+    Define
+    $$ f_n(x) = \frac{j}{n}, \frac{j}{n} \le f(x) < \frac{j+1}{n}$$ 
+    where $j \in \Z, n \in \Z_{+}$.
+
+    Then $f_n$ is simple (by the previous theorem), and the difference $\abs{f_n(x) - f(x)} \le \frac{1}{n}, \forall x$ - so the sequence converges uniformly to $f$.
+\end{proof}
+
+\begin{defn}
+    Let $f$ be simple taking values $y_1, y_2, \dots, y_j = y_k \iff j = k$.
+
+    Let $A \subset X$ be a measurable set. We denote
+    $$ \int_A f(x) d\mu = \sum_n y_n\mu(A_n), \text{ where } A_n = \{ x \in A : f(x) = y_n \} $$
+\end{defn}
+
+\begin{defn}
+    A simple function $f$ is called integrable if the series $y_n\mu(A_n)$ converges absolutely.
+
+    If $f$ is integrable, the sum of the series is called the integral of $f$ over $A$ with respect to the measure $\mu$.
+\end{defn}
+
+\begin{eg}
+    $$ \int_A 1 d\mu = \mu(A) $$
+\end{eg}
+
+\section{The integral}
+
+From now on, all sets we consider are measurable.
+
+\begin{lemma}
+    Let $A = \Union_n B_n$ for finite or countable $n$, such that $B_j \intersection B_k = \emptyset, j \ne k$.
+
+    Then let $f$ be a measurable function s.t. $f$ takes only one value $c_n$ at any point in $B_n$ - though it is possible that $c_m = c_n, m \ne n$.
+
+    Then
+    $$ \int_A f d\mu = \sum_n c_n \mu(B_n) $$
+    where the series converges absolutely iff $f$ is integrable on $A$.
+\end{lemma}
+
+\begin{proof}
+    $$ \sum_n y_n \mu(A_n) = \sum_n y_n \sum_{c_k = y_n} \mu(B_k) = \sum_k c_k \mu(B_k) $$
+    and
+    $$ \sum_n \abs{y_n} \mu(A_n) = \sum_k \abs{c_k} \mu(B_k) $$
+    and the series converge or diverge simultaneously.
+\end{proof}
+
+%TODO Catchup on lecture 13
+
+\begin{rem}
+    The integral has the following properties
+    \begin{enumerate}[label=\Roman*)]
+        \item $\int_A 1 d \mu = \mu(A)$
+        \item $\int_A c f d\mu = c \int_A f d \mu, c \in \R$ - as the existence of the r.h.s. $\implies$ the existence of the l.h.s.
+        \item $\int_A (f + g) d \mu = \int_A f d \mu + \int_A g d \mu$ - as above
+        \item A bounded measurable $f$ on $A$ is integrable \label{bounded_measurable_is_integrable}
+        \item If $f(x) \ge 0$ on $A$, then $\int_A f d \mu \ge 0$. (If $f \ge 0$, then there exists $\{ f_n \}, f_n \ge 0$).
+    
+            Hence, if $f(x) \ge g(x)$, then $$ \int_A f d\mu \ge \int_A g d\mu $$ and therefore, if $m \le f(x) \le M$, $m, M \in \R$, then
+            $$ m\mu(A) \le \int_A f d\mu \le M\mu(A) $$
+    
+        \item If $\mu(A) = 0$ then $\int_A f d\mu = 0$. From these we have
+        \item If $ f \sim g $, and the integrals $\int_A f d\mu$ and $\int_A g d\mu$ exist, then $\int_A f d\mu = \int_A g d\mu$.
+        \item
+            If $\phi(x)$ is integrable on $A$ and $\abs{f(x)} \le \phi(x)$ a.e. on $A$, then $f$ is integrable on $A$.
+        \item The integral $\int_A f d\mu$ exists if and only if the integral $\int_A \abs{f} d\mu$ exists.
+        \item If $f$ is integrable on some set $A$, then it is integrable on any measurable subset $B \subset A$.
+    \end{enumerate}
+\end{rem}
+
+\begin{thm}
+    Let $A = \Union_n A_n$ be a finite or countable union, with $A_j \intersection A_k = \emptyset, j \ne k$. Let $f$ be integrable on $A$.
+
+    Then $f$ is integrable on each $A_n$ and $\int_A f d\mu = \sum_n \int_{A_n} f d \mu$, where the series converges absolutely.
+\end{thm}
+
+\begin{proof}
+    First, assume $f$ is a simple function taking values $y_1, y_2, \dots, y_j \ne y_k$.
+
+    Denote 
+    $$B^k = \{ x \in A : f(x) = y_k \}$$ 
+    $$B_n^k = \{ x \in A_n : f(x) = y_k \}$$
+
+    Then 
+    \begin{align*}
+        \int_A f d\mu &= \sum_k y_k \mu(B^k) = \sum_k y_k \sum_n \mu(B_n^k) &\text{ (by the $\sigma$-additvity of $\mu$)} \\
+                      &= \sum_n \sum_k y_k \mu(B_n^k) &\text{ (by the absolute convergence of the series)} \\
+                      &= \sum_n \int_{A_n} f d\mu
+    \end{align*}
+
+    If $f$ is an arbitrary integrable function, then $\forall \epsilon > 0$, there exists a simple function $g$ s.t. $\abs{g(x) - f(x)} < \epsilon, \forall x \in A$. Since $g$ is simple, $\int_A g d\mu = \sum_n \int_{A_n} g d\mu$ - and the series converges absolutely.
+
+    Note that 
+    $$\abs{\int_A f d\mu - \int_A g d\mu} \le \epsilon\mu(A)$$
+    and
+    $$ \sum_n \abs{\int_{A_n} f d\mu - \int_{A_n} g d\mu} \le \epsilon\sum_n \mu(A_n) = \epsilon\mu(A) $$
+
+    Therefore $\sum_n \abs{\int_{A_n} f d\mu}$ converges - as 
+    $$ \int_{A_n} f d\mu = \int_{A_n} f d\mu - \int_{A_n} g d\mu + \int_{A_n} g d\mu $$
+    and we can divide this form up into two convergent series.
+
+    Then
+    $$ \abs{\sum_n \int_{A_n} f d\mu - \int_A f d\mu} = \abs{\sum_n \int_{A_n} f d\mu - \int_A f d\mu - \sum_n \int_{A_n} g d\mu + \int_A g d\mu} \le 2 \epsilon\mu(A) $$
+    and as the choice of $\epsilon$ was arbitrary, the proof is complete.
+\end{proof}
+
+\begin{thm}
+    Let $A = \Union_n A_n$ be a finite or countable union, with $A_j \intersection A_k = \emptyset, j \ne k$, and let $f$ be integrable on $A_n, \forall n$. Assume
+    $$ \sum_n \abs{\int_{A_n} f d\mu} $$
+    converges. Then $f$ is integrable on $A$ and
+    $$ \int_A f d\mu = \sum_n \int_{A_n} f d\mu $$
+\end{thm}
+
+\begin{rem}
+    Suppose $f$ is integrable on $X$, and it is also non-negative. Then we can define
+    $$ F(A) = \int_A f d\mu, A \subset X \text{ measurable} $$
+    Then $F$ is a non-negative function on the $\sigma$-algebra of measurable subsets of $X$, and it is $\sigma$-additive.
+
+    So $F(A)$ is a measure. Moreover, $F$ satisfies
+    $$ \mu(A) = 0 \implies F(A) = 0 $$
+\end{rem}
+
+\begin{thm}[Absolute continuity of the integral]
+    Let $f$ be integrable on $A$. Then
+
+    $$ \forall \epsilon > 0, \exists \delta > 0, s.t. \abs{\int_e f d\mu} < \epsilon $$
+    for any measurable subset $e \subset A$ s.t. $\mu(e) < \delta$.
+\end{thm}
+
+\begin{proof}
+    If $f$ is bounded, then the result is obvious by \ref{bounded_measurable_is_integrable} (comparison). %TODO: Ref this
+
+    In general, let $A_n = \{ x \in A : n \le \abs{f(x)} < n + 1 \}$, $B_N = \Union_{n=1}^N A_n$, and $C_N = A \backslash B_N$.
+
+    By ???, and the disjointedness of $A_n$,
+    $$ \int_A \abs{f} d\mu = \sum_{n_1}^\infty \int_{A_n} \abs{f} d\mu $$
+
+    Then we can fix $\epsilon > 0$, and choose $N$ s.t.
+    $$ \sum_{N+1}^\infty \int_{A_n} \abs{f} d\mu = \int_{C_N} \abs{f} d\mu < \frac{\epsilon}{2} $$
+
+    Let $ 0 < \delta < \frac{\epsilon}{2(N+1)}$. If $\mu(e) < \delta$, then by property 5 and ???,
+    $$ \abs{\int_e f d\mu} \le \int_e \abs{f} d\mu = \int_{e \intersection B_N} \abs{f} d\mu + \int_{e \intersection C_N} \abs{f} d\mu $$
+    But
+    $$ \int_{e \intersection B_N} \abs{f} d\mu \le \mu(e) \sup_{B_N} \abs{f} = \mu(e)(N + 1) < \delta(N+1) < \frac{\epsilon}{2} $$
+    and
+    $$ \int_{e \intersection C_N} \abs{f} d\mu \le \int_{C_N} \abs{f} d\mu < \frac{\epsilon}{2} $$
+    so clearly
+    $$\abs{\int_e f d\mu} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon $$
+\end{proof}
+
+\begin{thm}[Chebyshev inequality]
+    Let $\phi$ be a integrable nonnegative function on $A$, and let $c > 0$ be a constant.
+
+    Then
+    $$ \mu(\{ x \in A : \phi(x) \ge c \}) \le \frac{1}{c} \int_A \phi d\mu $$
+\end{thm}
+
+\begin{proof}
+    Let $A' = \{x \in A : \phi(x) \ge c \}$.
+
+    Then 
+    $$ \int_A \phi d\mu = \int_{A'} \phi d\mu + \int_{A \backslash A'} \phi d\mu \ge \int_{A'} \phi d\mu \ge c\mu(A') $$
+\end{proof}
+
+\begin{corollary}
+    If $\int_A \abs{f} d\mu = 0$ then $f(x) = 0$ a.e. on A.
+\end{corollary}
+
+\begin{proof}
+    Define $A_n = \{ x \in A : \abs{f(x)} \ge \frac{1}{n} \}$ - then clearly $\forall x \in A \backslash \union_n A_n, f(x) = 0$. So it would suffice to show that $\mu(\union_n A_n) = 0$. 
+    
+    As $\abs{f}$ is integrable and non-negative, for each $A_n$, we can apply the Chebyshev inequality
+    $$ \mu(A_n) = \mu(\{x \in A : \abs{f(x)} \ge \frac{1}{n}\}) \le n \int_A \abs{f}d\mu = 0 $$
+    and $A_1 \subset A_2 \subset \dots$, so by the continuity of the measure $\mu(\union_n A_n) = 0$.
+\end{proof}
+
+\begin{thm}[Dominated convergence theorem or Lebesgue theorem]
+    Let $f_n$ be a sequence of integrable functions on $A$, with $f_n \rightarrow f$ a.e. on $A$, and $\abs{f_n(x)} \le \phi(x)$ a.e. on $A$ where $\phi$ is integrable.
+
+    Then $f$ is integrable on $A$, and 
+    $$\int_A f d\mu = \lim_{n \rightarrow \infty} \int_A f_n d\mu \text{ } \left(\text{or $\int_A f_n d\mu \rightarrow \int_A f d\mu$} \right)$$
+\end{thm}
+
+\begin{proof}
+    Obviously, $\abs{f(x)} \le \phi(x)$, so by property 6, $f$ is integrable.
+
+    Fix $\epsilon > 0$. By the absolute continuity of the integral, $\exists \delta > 0$ s.t. if $\mu(B) < \delta$ then $\int_B \phi d\mu < \frac{\epsilon}{4}$.
+
+    By Egorov's theorem, we choose $B$ s.t. $f_n \rightarrow f$ uniformly on $A \backslash B = C$.
+
+    So $\exists N$ s.t. $\forall n \ge N$, $\forall x \in C: \abs{f_n(x) - f(x)} \le \frac{\epsilon}{2\mu(C)}$.
+
+    Then 
+    $$ \int_A f d\mu - \int_A f_n d\mu = f_C (f - f_n) d\mu + \int_B f d\mu - \int_B f_n d\mu$$
+    and so
+    $$ \abs{\int_A f d\mu - \int_A f_n d\mu} \le \mu(C)\frac{\epsilon}{2\mu(C)} + \frac{\epsilon}{4} + \frac{\epsilon}{4} = \epsilon $$
+\end{proof}
+
+% Start of lecture 14
+
+\begin{corollary}[bounded convergence theorem]
+
+    If $f_n \rightarrow f$ a.e. and $\abs{f_n(x)} \le \text{ a constant}, \forall n$, then
+
+    $$ \int_A f_n d\mu \rightarrow \int_A f d\mu $$
+\end{corollary}
+
+\begin{thm}[monotone convergence theorem - Levi]
+
+    Let $f_1(x) \le f_2(x) \le \dots$ on $A$, with $f_n(x)$ integrable on $A$ and $\int_A f_n d\mu \le K, \forall n$ where $K$ is some constant.
+
+    Then there exists a.e. a finite limit $f_n(x) \rightarrow f(x)$, with $f(x)$ integrable and 
+    $$ \int_A f_n d\mu \rightarrow \int_A f d\mu $$
+    (On the set where $f$ is not defined, we can let $f \equiv 0$.)
+\end{thm}
+
+\begin{proof}
+    We can assume w.l.o.g. that $f_1(x) \ge 0$ - otherwise, we could take $f_n - f_1, \forall n$.
+
+    Let 
+    $$\Omega = \{ x \in A : f_n(x) \rightarrow \infty, n \rightarrow \infty \}$$
+    Then we note that $\Omega$ can be expressed as
+    $$\Omega = \Intersection_r \Union_n \Omega_n^{(r)}, \Omega_n^{(r)} = \{ x \in A : f_n(x) \ge r \} $$
+
+    By the Chebyshev inequality, $\mu(\Omega_n^{(r)}) \le \frac{K}{r}$.
+
+    Noting that $\Omega_1^{(r)} \subset \Omega_2^{(r)} \dots$, then by continuity of the measure,
+    $$ \mu(\Union_n \Omega_n^{(r)}) = \lim_{n \rightarrow \infty}(\Omega_n^{(r)}) \le \frac{K}{r} $$
+
+    Since $\Omega \subset \Union_n \Omega_n^{(r)}, \forall r$, we conclude that $\mu(\Omega) = 0$.
+
+    Therefore, $f_n(x) \rightarrow f(x)$ a.e. on $A$, with $f(x)$ a finite function.
+
+    Consider
+    $$A_r = \{ x \in A : r - 1 \le f(x) < r \}, r \in \Z_{+}$$
+    Let $\phi(x)  = r$ on $A_r$. So $\phi(x)$ is a simple function with the property that $f_n(x) < \phi(x)$.
+
+    It remains to show that $\phi(x)$ is integrable - since then the property of integrability of $f(x)$ would follow by Lebesgue's theorem.
+
+    Let $ B_s = \union_{r=1}^s A_r $. On $B_s$, $f_n(x), f(x), \phi(x)$ are all bounded.
+
+    Then we find that, as $\phi(x) \le f(x) + 1$,
+    \begin{align*}
+        \int_{B_s} \phi(x) d\mu &\le \int_{B_s} f(x) d\mu + \mu(A) \\
+                                &\le \lim_{n \rightarrow \infty} \int_{B_s} f_n(x) d\mu + \mu(A) \text{ (by bounded convergence)} \\
+                                &\le K + \mu(A)
+    \end{align*}
+
+    On the other hand
+    $$ \int_{B_s} \phi(x) d\mu = \sum_{r=1}^s r \mu(A_r) $$
+    As the sums are bounded by $K + \mu(A)$, this implies the convergence of
+    $$ \sum_{r=1}^\infty r \mu(A_r) = \int_A \phi(x) d\mu $$
+\end{proof}
+
+\begin{rem}
+    The condition $f_1 \le f_2 \le \dots, \int_A f_n d\mu \le K$ can be replaced by the converse monotone condition
+    $$ f_1 \ge f_2 \ge \dots, \int_A f_n d\mu \ge K $$
+\end{rem}
+
+\begin{corollary}
+    Let $\psi_n(x) \ge 0, \sum_{n=1}^\infty \int_A \psi_n(x) d\mu < \infty$.
+    Then $\sum_{n=1}^\infty \psi_n(x)$ converges a.e. on $A$ and
+    $$ \sum_{n=1}^\infty \int_A \psi_n(x) d\mu = \int_A \sum_{n=1}^\infty \psi_n(x) d\mu$$
+\end{corollary}
+
+\begin{thm}{Faton}
+
+    Let $f_n \rightarrow f$ a.e. on $A$, with $f_n$ integrable and nonnegative, and $\int_A f_n d\mu \le K, \forall n$ for some constant $K \in \R$.
+
+    Then $f$ is integrable on $A$ and
+    $$ \int_A f d\mu \le {\liminf}_n \int_A f_n d\mu $$
+\end{thm}
+
+\begin{proof}
+    Let $\phi_n(x) = \inf_{k \ge n} f_k(x)$
+
+    Then $\phi_n(x)$ is measurable, since 
+    $$\{ x \in A : \phi_n(x) < c \} = \Union_{k \ge n} \{ x \in A : f_k(x) < c \} $$
+    Since $0 \le \phi_n(x) \le f_n(x)$, and $f_n$ is integrable, $\phi_n$ is integrable, and the integral has the property that 
+    $$\int_A \phi_n(x) d\mu \le \int_A f_n(x) d\mu \le K, \forall n$$
+
+    Moreover, we note that $\phi_1(x) \le \phi_2(x) \le \dots$, and $\lim_{n \rightarrow \infty} \phi_n(x) \ f(x)$ a.e., because
+    $$ f_l(x) - \epsilon \le \phi_n(x) \le f_k(x), k \ge n $$
+    and some $l(\epsilon) \ge n$.
+
+    Therefore, by Levi's theorem,
+    $$ \int_A \phi_n d\mu \rightarrow \int_A f d\mu $$
+
+    So by the previous two inequalities, we obtain that
+    $$ \int_A f d\mu \le {\liminf}_n \int_A f_n d\mu \le K $$
+\end{proof}
+
+%Start of lecture 15
+
+\section{Sets of infinite measure}
+
+Up to now, we have only considered integrals on sets of finite measure.
+
+In general, we also want to consider integrals over sets $X$, with $\mu(X) = \infty$. In order to define it, we must let $\mu$ be $\sigma$-finite, i.e.
+$$ X = \Union_{n=1}^\infty X_n, \mu(X_n) < \infty $$
+and assume also that $X_1 \subset X_2 \subset \dots$. Such a sequence $X_n$ is called exhaustive.
+
+We can now define the integral on sets of infinite measure.
+
+\begin{defn}
+    A measurable function $f : X \rightarrow \R $ is called integrable on $X$ if it is integrable on any measurable $A \subset X, \mu(A) < \infty$ and if for any exhaustive sequence $X_n$, then the limit
+    $$ \lim_{n \rightarrow \infty} \int_{X_n} f d \mu $$
+    exists and does not depend on the choice of $X_n$.
+
+    Then this limit is called the Lebesgue integral of $f$ over $X$, and is denoted by
+    $$ \int_X f d\mu $$
+\end{defn}
+
+\begin{rem}
+    The Lebesgue, Levi, and Faton results also hold for $\mu(A) = \infty$.
+\end{rem}
+
+However, we note that bounded measurable functions are now not necessarily integrable.
+
+\begin{thm}
+    If $f$ is integrable in the Riemann sense over some finite interval $[a, b] \subset \R$, then $f$ is integrable w.r.t. the Lebesgue measure on $\R$, and the integral coincides with the Riemann integral.
+\end{thm}
+    
+We first note that this is trivial for boxes in $\R^n$, by the definitions of both the Riemann and Lebesgue integrals. 
+
+\begin{proof}
+    First recall the definition of the Riemann integral. We divide the interval $[a, b]$ into $n$ sub-intervals, and define the end-points of each as
+    $$ x_k = a + \frac{k}{n}(b - a) $$
+    where each sub-interval has length $\frac{1}{n}(b -a)$.
+
+    Then we define the upper Darboux sum
+    $$\Omega_n = \frac{b-a}{n} \sum_{k=1}^n M_{nk}, M_{nk} = \sup_{x_{k-1} \le x < x_k} f(x) $$
+    and the lower Darboux sum
+    $$\omega_n = \frac{b-a}{n} \sum_{k=1}^n m_{nk}, m_{nk} = \inf_{x_{k-1} \le x < x_k} f(x) $$
+
+    Then the Riemann integral exists when the limits $\lim_{n \rightarrow \infty} \Omega_n$ and $\lim_{n \rightarrow \infty} \omega_n$ exist, and are equal - and we define the integral as
+    $$ I = (R) \int_a^b f(x) dx = \lim_{n \rightarrow \infty} \Omega_n $$
+
+    \newcommand{\highF}{\bar{f}}
+    \newcommand{\lowF}{\underline{f}}
+
+    We can then define two functions
+    $$ \highF_n(x) = M_{nk}, x_{k-1} \le x < x_k $$
+    $$ \lowF_n(x) = m_{nk}, x_{k-1} \le x < x_k $$
+    with $\highF_n, \lowF_n$ arbitrary at $x = b$.
+
+    Then
+    $$ \int_{[a, b]} \highF_n d\mu = \Omega_n; \int_{[a, b]} \lowF_n d\mu = \omega_n $$
+
+    We note that $\highF_n$ forms a non-increasing sequence, and similarly $\lowF_n$ a non-decreasing sequence. By the Levi theorem ???, we then have that
+    $$ \highF_n(x) \rightarrow \highF(x) \ge f(x), n \rightarrow \infty $$
+    $$ \lowF_n(x) \rightarrow \lowF(x) \le f(x), n \rightarrow \infty $$
+    with $\highF, \lowF$ integrable, where additionally we can switch the limit and the integral, giving
+    $$ \int_{[a, b]} \highF d\mu = \lim_{n \rightarrow \infty} \Omega_n = I = \lim_{n \rightarrow \infty} \omega_n = \int_{[a, b]} \lowF d \mu $$
+    giving that 
+    $$ \int_{[a, b]} (\highF - \lowF) d\mu = \int_{[a, b]} \abs{\highF - \lowF} d\mu = 0 $$
+    which, by the corollary to the Chebyshev inequality, yields that $\highF(x) = f(x) = \lowF(x)$ a.e. , and
+    $$ \int_{[a, b]} f \mu = I $$
+\end{proof}
+
+However, the converse is not true - consider the characteristic function of $\Q$ in $\R$
+$$ f(x) = \begin{cases}
+    1, &x - \text{rational} \\
+    0, &x - \text{irrational} 
+\end{cases}$$
+
+Then $f \sim 0$ and so $\int_{[a, b]} f d\mu = 0$, but the Riemann integral of the function does not exist - $\Omega_n = 1$, and $\omega_n  = 0$.
+
+\begin{rem}
+    One can define the Riemann integral similarly to the Lebesgue integral, but using the Jordan measure instead of the Lebesgue measure.
+\end{rem}
+
+This definition of the Riemann integral can only be used on bounded functions - otherwise, we cannot construct the Darboux sums. Unbounded functions are not Riemann-integrable in the proper sense.
+
+But, if $f(x) \ge 0$, and $\forall \epsilon > 0$ the integral $(R) \int_{a + \epsilon}^b f(x) dx$ exists and has a limit as $\epsilon \rightarrow 0$, then
+$$ \int_{[a, b]} f d\mu = \lim_{\epsilon \rightarrow 0} (R) \int_{a + \epsilon}^b f(x) dx - \text{ (improper) Riemann integral} $$
+However, if for some $f$ not necessarily $\ge 0$
+$$ \lim_{\epsilon \rightarrow 0} (R) \int_{a + \epsilon}^b \abs{f(x)} d x = \infty $$
+but the limit
+$$ \lim_{\epsilon \rightarrow 0} (R) \int_{a + \epsilon}^b f(x) dx $$
+exists - we say that the Riemann integral converges conditionally - then f is not (Lebesgue) integrable on $[a, b]$.
+
+\begin{eg}
+    The integral
+    $$ \int_0^1 \frac{1}{x} \sin \frac{1}{x} dx $$
+    does not exist in the Lebesgue sense.
+\end{eg}
+
+The integral over unbounded subsets of $\R$ exists as a Riemman integral in an improper sense (if at all). If it converges absolutely, then the corresponding Lebesgue integral exists and is equal to the Riemann integral. If it converges conditionally, then the Lebesgue integral does not exist.
+
+\begin{eg}
+    The integral
+    $$ \int_{-\infty}^\infty \frac{\sin x}{x} $$
+    does not exist in the Lebesgue sense, but exists as a conditionally convergent improper Riemann integral (and is equal to $\pi$).
+\end{eg}
+
+% start of lecture 16
+% plan for this week
+% - product measures
+% - integration wrt product measures (Furbini's thm)
+
+\chapter{Product Measures}
+
+\section{Product measures}
+
+\begin{defn}
+    The direct product $X \times Y$ is the set $\{ (x, y) : x \in X, y \in Y \}$.
+\end{defn}
+
+If $(X_1, M_1, \mu_1)$ and $(X_2, M_2, \mu_2)$ are measure spaces, then $M_1 \times M_2$ is a semi-ring, with
+\begin{itemize}
+  \item $ (A \times B) \intersection (C \times D) = (A \intersection C) \times (B \intersection D) $
+  \item $ (A_1 \times A_2) \backslash (B_1 \times B_2) = (A_1 \backslash B_1 \times A_2) \union (A_1 \times A_2 \backslash B_2) \union (A_1 \backslash B_1 \times A_2 \backslash B_2) $
+\end{itemize}
+and we define the measure 
+$$ \mu(A \times B) = \mu_1(A)\mu_2(B) $$
+
+\begin{lemma}
+    $\mu$ is $\sigma$-additive on $M_1 \times M_2$
+\end{lemma}
+
+\begin{proof}
+  Take $C = A \times B$, with 
+  $$C = \Union_{n=1}^\infty C_n, C_n = A_n \times B_n, C_i \intersection C_j = \emptyset, i \ne j $$
+
+  Define the function
+    $$ f_n(x) = \begin{cases}
+        \mu_2(B_n), &x \in A_n \\ 
+        0, &x \not \in A_n
+        \end{cases} $$
+  If $x \in A$, then $x \in A_n$ for some $n$. Since $C = A \times B$, it follows that
+  $$ \Union_n B_n = B$$
+    and so for $x \in A$, 
+    $$\sum_n f_n(x) = \mu_2(B)$$
+
+  By the corollary to Levi's theorem,
+  $$ \sum_n \int_A f_n(x) d\mu_1 = \int_A \mu_2(B) d\mu_1 = \mu_1(A)\mu_2(B) $$
+  but on the other hand,
+  $$ \int_A f_n(x) d\mu_1 = \mu_2(B_n)\mu_1(A_n) = \mu(C_n) $$
+  which gives that
+    $$ \sum_n \mu(C_n) = \mu(C) $$
+\end{proof}
+
+Hence, we can extend $\mu$ to the $\sigma$-algebra generated by $M_1 \times M_2$. This extension is called the product measure $\mu_1 \times \mu_2$.
+
+\begin{eg}
+  The product measure on $\R^2$ is $\mu \times \mu$.
+  %TODO: double integral graph diagram
+\end{eg}
+
+In general, let $\mu_x, \mu_y$ be complete measures on $X, Y$ respectively, and let $\mu = \mu_x \times \mu_y$. Let
+$$ A_x = \{ y : (x, y) \in A \} $$
+$$ A_y = \{ x : (x, y) \in A \} $$
+
+\begin{lemma}
+  For any $\mu$-measurable set $A$, $\exists B$ such that
+  \begin{enumerate}
+     \item $A \subset B, \mu(A) = \mu(B)$
+     \item $ B = \Intersection_n B_n$, with $B_1 \supset B_2 \supset \dots$, where
+         $$ B_n = \Union_k B_{nk}, B_{n1} \subset B_{n2} \subset \dots $$
+        and $B_{nk} \in R(L)$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    $\exists C_n$ s.t. $A \subset C_n$, $C_n \Union_{\tau} \Delta_{n\tau}, \Delta_{n\tau} \in L$, with 
+    $$\mu(C_n) < \mu(A) + \frac{1}{n}$$
+
+    Then we define 
+    $$ B_n = \Intersection_{j=1}^n C_j = \Union_s \delta_{ns}, \delta_{ns} \in L $$
+    and
+    $$ B_{nk} = \Union_{s=1}^k \delta_{ns} $$
+\end{proof}
+
+\begin{thm}
+  For any $\mu$-measurable set $A$,
+  $$ \mu(A) = \int_X \mu_y(A_x) d \mu_x = \int_Y \mu_x(A_x) d\mu_y $$
+\end{thm}
+
+\begin{proof}
+  We will only prove that
+  $$ \mu(A) = \int_X \phi_A(x) d\mu_x, \phi_A(x) = \mu_y(A_x) $$
+  as the second proof is identical to the first.
+
+  %TODO Curly L for semiring
+  Take $\mu$ to be the extension of the measure defined on sets of the semiring $L$, and let $A = A_{y_0} \times A_{x_0}$. On such sets, the equivalence is obvious, as we can define
+    $$ \phi_A(x) = \begin{cases}
+        \mu_y(A_{x_0}), & x \in A_{y_0} \\ 
+        0, & x \not \in A_{y_0}
+      \end{cases} $$
+  with a simple extension onto the corresponding ring $R(L)$.
+
+    Then by continuity of the measure, 
+    $$\phi_B(x) = \lim_{n \rightarrow \infty} \phi_{B_n}(x), \phi_{B_n}(x) = \lim_{k \rightarrow \infty} \phi_{B_{nk}}(x)$$
+    with
+    $$ \phi_{B_1} \ge \phi_{B_2} \ge \dots $$
+    and
+    $$ \phi_{B_1} \le \phi_{B_2} \le \dots $$
+
+    So by Levi's theorem, we can extend the claim to all sets
+    $$ B = \Intersection_n \Union_k B_{nk}, B_{nk} \in R(L) $$
+
+    Finally, to show the claim holds for sets of measure 0, let $A$ be such that $\mu(A) = 0$. Then $\mu(B) = \mu(A) = 0$ for some $B$, so $ \phi_B(x) = \mu_y(B_x) = 0 $ a.e. - and as $A_x \subset B_x$, $A_x$ must be measurable with
+    $$ \phi_A(x) = \mu_y(A_x) = 0 $$
+    giving
+    $$ \int_X \phi_A(x)\mu_y(B_x) = 0 = \mu(A) $$
+    so the claim holds.
+
+    For any set $A$, $B = A \union Z$ for $A \intersection Z = \emptyset$, with $\mu(Z) = 0$ (by the lemma), so
+    $$ \mu(A) = \mu(B) = \int_X \phi_B d\mu_x  = \int_X \phi_A d\mu_x + \int_X \phi_Z d \mu_x = \int \phi_A(x) d\mu_x $$
+\end{proof}
+
+%TODO Catch up with lecture 16
+
+\begin{thm}
+    For any measurable set $A$, and taking $B$ constructed as before
+    $$ \mu(A) = \int_B f(x) d \mu_x $$
+\end{thm}
+
+\begin{thm}(Furbini's theorem)
+
+    Let $\mu_x, \mu_y$ be complete, $\sigma$-additive measures with $\mu = \mu_x \times \mu_y$, and $A = X \times Y$.
+
+    Then for any function $f : A \rightarrow \R^2$ integrable w.r.t. $\mu$,
+    $$ \int_A f d\mu = \int_X \int_{A_x} f d\mu_y d\mu_x = \int_Y \int_{A_y} f d\mu_x d\mu_y $$
+  This includes a.e. the existence of the integral inside the brackets.
+\end{thm}
+
+\begin{proof}
+    Let $f \ge 0$, $U = X \times Y \times Z$, with $Z = \R$, and $\lambda = \mu_x \times \mu_y \times \mu'$, with $\mu'$ a Lebesgue measure on $\R$.
+
+    Let
+    $$ W = \{ (x, y, z) : (x, y) \in A, 0 \le z \le f(x, y) \} $$
+
+    Then by theorem ???, $\lambda(W) = \int_A f d\mu$, and so by theorem ???
+    $$ \lambda(W) = \int_A f d\mu = \int_X \zeta(W_x) d \mu_x $$
+    where
+    $$ W_x = \{ (y, z) : (x, y, z) \in W \} $$
+    and $\zeta = \mu_y \times \mu'$.
+
+    By theorem ???,
+    $$ \zeta(W_x) = \int_{A_x} f d\mu_y $$
+    and by combining these expressions, we obtain
+    $$ \int_A f d\mu = \lambda(W) = \int_X \zeta(W_x) d\mu_x = \int_X \int_{A_x} f d\mu_y d\mu_x $$
+
+    The proof of the theorem for the general case follows from writing $ f = f_{+} - f_{-}$ with $f_{+}, f_{-} \ge 0$. These can be constructed as
+    $$ f_{+} = \frac{\abs{f} + f}{2}, f_{-} = \frac{\abs{f} - f}{2} $$
+    and are both integrable, and by the property of the integral, the result follows.
+\end{proof}
+
+Note that the reverse does not hold - the existence of the interior integral does not imply the integrability of $f$.
+
+\begin{eg}
+  Let 
+  $$f(x, y) = \frac{xy}{(x^2 + y^2)^2}$$
+  over $X = (-1, 1), Y = (-1, 1)$ with $f(0, 0) = 0$. Then
+  $$ \int_X f(x, y) d \mu_x = 0 \text{ for any } y \in (-1, 1) $$
+  $$ \int_Y f(x, y) d \mu_y = 0 \text{ for any } x \in (-1, 1) $$
+  So
+  $$ \int_Y \int_X f(x, y) d\mu_x d\mu_y = \int_Y \int_X f(x, y) d\mu_y d\mu_x = 0 $$
+  However
+  \begin{align*}
+      \int_X \int_Y \abs{f(x, y)} d\mu_y d\mu_x &\ge \int_X \int_{\abs{y} \le x} \abs{f(x, y)} d\mu_y d\mu_x \\
+      &\ge \int_X \int_{\abs{y} \le x} \frac{xy}{4x^4} d\mu_y d\mu_x \\
+      &= \int_X \abs{\frac{x^3}{8x^4}} d\mu_x \text{ which diverges}
+  \end{align*}
+\end{eg}
+
+\begin{corollary}
+  If either of
+ $$ \int_X \int_{A_x} \abs{f} d\mu_y d\mu_x, \int_Y \int_{A_y} \abs{f} d\mu_x d\mu_y $$
+  exist, then $f$ is integrable and Furbini's theorem holds.
+\end{corollary}
+
+\begin{proof}
+  Let
+  $$ M = \int_X \int_{A_x} \abs{f} d\mu_y d\mu_x $$
+  and define $f_n(x) = \text{min}(\abs{f(x)}, n)$, which is a measurable and bounded function on $A$. Then $f_n$ is integrable on $A$, and by Furbini's theorem
+  $$ \int_A f_n d\mu = \int_X \int_{A_x} f_n d\mu_y d\mu_x \le M $$
+  However, $f_1 \le f_2 \le \dots$, with $f_n \rightarrow \abs{f}$, so by Levi's theorem, $\abs{f}$ is integrable, implying $f$ is integrable.
+\end{proof}
+
+\section{Differentiation And Integration}
+
+Recall the Lebesgue-Stiltjes measure $L^P$. Let $\mu$ be the Lebesgue measure on $\R$, and take $f : \R \to R$. We introduce the notation
+$$ \int_{[a, b]} f d\mu = \int_a^b f d\mu $$
+
+We consider $\Phi(x) = \int_a^b f\mu $, and ask the following questions
+\begin{enumerate}
+  \item Does $$ \frac{d}{dx}\Phi(x) = f(x) $$
+      For which $f$ does this hold?
+  \item 
+      Does
+      $$ \int_a^b F'(x) d\mu = F(b) - F(a) $$
+      If so, for which $F$ does this hold?
+\end{enumerate}
+
+Note that if $f(x) \ge 0$, $\Phi(x)$ is non-decreasing. For any integrable $f$, $f = f_{+} - f_{-}; f_{+}, f_{-} \ge 0$. Therefore, in general, $\Phi$ is the difference of two monotone functions - and monotone functions are used to construct the Lebesgue-Stiltjes measures.
+
+\subsection{Monotone functions}
+
+\begin{defn}
+  $f : \R \to \R$ is called non-decreasing on $A \subset \R$ if $\forall x_1, x_2 \in A$,
+    $$ x_1 < x_2 \implies f(x_1) \le f(x_2) $$
+\end{defn}
+
+We denote the limit from the right as
+$$ f(x + 0) = \lim_{y \rightarrow x + 0} f(y) $$
+and the limit from the left as
+$$ f(x - 0) = \lim_{y \rightarrow x - 0} f(y) $$
+If $f(x + 0) = f(x - 0)$, then either $f$ is continuous at $x$ or $f$ has a removable singularity (in general).
+
+\begin{defn}
+    A point $x$ where both limits exist but are not equal is called a point of discontinuity of the first kind, and $f(x + 0) - f(x - 0)$ is called the jump of $f$ at $x$.
+\end{defn}
+
+\begin{defn}
+    A function $f$ is called continuous from the right if $\forall x, f(x + 0) = f(x)$, and continuous from the left if $\forall x, f(x - 0) = f(x)$.
+\end{defn}
+
+We have
+\begin{enumerate}
+  \item Any non-decreasing function $f$ on $[a, b]$ is measurable and bounded, and therefore integrable.
+    \begin{proof}
+      $f(a) \le f(x) \le f(b)$, for $a \le x \le b$, so $f$ is bounded. 
+        
+        Let $c > 0$, then
+        $$ 
+        \{ x \in [a, b] : f(x) < c \} = \begin{cases}
+          [a, d), & d = \sup\{x \in [a, b] : f(x) < c \} \\
+          [a, b]
+        \end{cases}
+        $$
+        then $f$ is measurable in the Lebesgue sense.
+    \end{proof}
+ \item Any nondecreasing function $f$ has only (if any) discontinuities of the first kind.
+    \begin{proof}
+        Take $x_0 \in [a, b]$. Let $x_n \rightarrow x_0, x_n < x_0$. We have that $f(a) \le f(x) \le f(b)$, so the sequence $f(x_n)$ is bounded and therefore contains a convergent subsequence. Then there is only one possible limit point of $f(x_n)$ - if there were two such points, it would contradict the monotonicity of $f(x)$. So $f(x_n) \rightarrow f(x_0 - 0)$. Similarly, we can show the existence of $f(x + 0)$.
+    \end{proof}
+  \item The set of points of discontinuity of a non-decreasing function $f$ is at most countable (left as an exercise).
+\end{enumerate}
+
+There are two important types of non-decreasing functions:
+\begin{enumerate}
+  \item continuous non-decreasing
+  \item jump functions
+\end{enumerate}
+    
+\begin{defn}
+  Let $x_1, x_2, \dots$ be a countable set of points in $[a, b]$, and $h_1, h_2, \dots$ be a set of positive real numbers such that 
+  $$ \sum_{k=1}^\infty h_k < \infty $$
+  Then a jump function is a function $f : [a, b] \to \R$,
+  $$ f(x) = \sum_{x_k < x} h_k $$
+  Clearly $f$ is non-decreasing, and it is continuous from the left. There are only discontinuities at $x_k$, with jumps of $h_k$.
+\end{defn}
+
+\begin{eg}
+  Let $\{ x_n \in [a, b] : x_n \in \Q \}$, and take $h_n = \frac{1}{2^n}$. Then the corresponding jump function is continuous at irrational points and discontinuous at rational points.
+\end{eg}
+
+and we can append to the list of properties
+\begin{enumerate}
+  \item Any non-decreasing function which is continuous from the left can be written (uniquely up to constants) as a sum of a continuous function and a jump function which is continuous from the left.
+
+    \begin{proof}
+      Let $f$ be a non-decreasing, continuous from the left function with discontinuities $x_1, x_2, \dots$ and jumps $h_1, h_2, \dots$. Let
+      $$ H(x) = \sum_{x < x_k} h_k $$
+      $$ \phi(x) = f(x) - H(x) $$
+      Then for $x'' > x'$, $\phi(x'') - \phi(x') = f(x'') - f(x') - (H(x'') - H(x')) \ge 0$, so $\phi$ is non-decreasing.
+
+      For any $x \in [a, b]$,
+        $$ \phi(x - 0) = f(x - 0) - \sum_{x_k < x} h_k $$
+        $$ \phi(x + 0) = f(x - 0) - \sum_{x_k = x} h_k $$
+      So $\phi(x_m + 0) - \phi(x_m - 0) = f(x_m + 0) - f(x_m - 0) - h_m = 0$ so $\phi$ is continuous.
+
+      Then $f(x) = \phi(x) + H(x)$.
+    \end{proof}
+\end{enumerate}
+
+% Start of lecture 18
+
+\subsection{Differentiability}
+
+Suppose we have a function $f : \R \to \R$, with $x_0 \in \R$. Let
+$$ F(x, x_0) = \frac{f(x) - f(x_0)}{x - x_0} $$
+
+\renewcommand{\limsup}{\overline{\lim}}
+\renewcommand{\liminf}{\underline{\lim}}
+
+We let $\lim\sup \equiv \limsup$ and $\lim\inf \equiv \liminf$ notationally. Then
+$$ \limsup_{x \to x_0 + 0} g(x) = \int_{\delta > 0} \sup_{x_0 < x < x_0 + \delta} g(x) $$
+and similarly from the left.
+
+Then we have to consider the four limits
+\newcommand{\Dpu}{D^{+}}
+\newcommand{\Dpl}{D_{+}}
+\newcommand{\Dmu}{D^{-}}
+\newcommand{\Dml}{D_{-}}
+$$ \Dpu = \limsup_{x \to x_0 + 0} F(x, x_0) $$
+$$ \Dpl = \liminf_{x \to x_0 + 0} F(x, x_0) $$
+$$ \Dmu = \limsup_{x \to x_0 - 0} F(x, x_0) $$
+$$ \Dml = \liminf_{x \to x_0 - 0} F(x, x_0) $$
+
+And $f'(x_0) = \lim_{x \to x_0} F(x, x_0)$ exists if and only if 
+$$-\infty < \Dml = \Dmu = \Dpl = \Dpu < +\infty$$
+We note that $\Dpl \le \Dpu$ and $\Dml \le \Dmu$.
+
+\begin{rem}
+  The Weirstrauss function
+    $$ f(x) = \sum_{n = 0}^\infty b^n \cos(a^n \pi x), 0 < b < 1 $$
+  is a continuous function, but if $\abs{ab} > 1$, the function is nowhere differentiable.
+\end{rem}
+
+Monotone functions are differentiable a.e..
+
+\begin{defn}
+  Let $J$ be a family of intervals. $J$ is said to cover a set $E$ in the Vitali sense if
+    $$ \forall \epsilon > 0, x \in E, \exists I \in J \text{ s.t. } x \in I, \mu(I) < \epsilon $$
+\end{defn}
+
+\begin{lemma}(Vitali)
+
+    Let $E \subset [a, b]$ be covered by $J$ in the Vitali sense. Then $\forall \epsilon > 0$, there exists a finite subfamily  $\{ I_1, I_2, \dots, I_n \} \subset J $ such that $I_j \intersection I_k = \emptyset, j \ne k$, and
+    $$ \mustar(E \backslash \Union_{k=1}^n I_k) < \epsilon $$
+\end{lemma}
+
+\begin{proof}
+  Let $E \subset G$, where $G$ is a finite interval s.t. all intervals $I \in J$ have $I \subset G$.
+
+  Choose $I_1$ as any interval in $J$.
+
+    Suppose $I_1, I_2, \dots, I_n$ are chosen. Then let $\kappa_n = \sup_{I_\alpha \in J, I_\alpha \intersection I_j = \emptyset} m(I_\alpha)$. Then choose $I_{n+1}$ such that $m(I_{n+1}) > \frac{\kappa_n}{2}$ - and additionally $I_{n+1} \intersection I_j = \emptyset, j \le n$.
+
+    If we cannot choose such a set from $J$, then $E \subset \Union_{k=1}^n I_k$, and we have already constructed the finite subfamily. Otherwise, $\Union_{k=1}^\infty I_k \subset G$, and $\sum_{k=1}^\infty m(I_k) < \infty$, as the $I_k$ are disjoint. Then as this sum converges, for any fixed $\epsilon > 0$, 
+    $$ \exists N s.t. \sum_{k=N+1}^\infty m(I_k) < \frac{\epsilon}{5} $$
+
+    Then let $R = E \backslash \Union_{k=1}^N I_k$ - it remains to show that $\mustar(R) < \epsilon$. Let $x \in R$. Since $\Union_{k=1}^N I_k$ is closed, there exists an open interval containing $x$ in $R$. Since $J$ covers $E$ in the Vitali sense, there exists $I \in J$ such that $x \in I$ and $I \intersection I_k = \emptyset, k \le N$.
+
+    Note that if $I \intersection I_j = \emptyset, j \le n$, then $m(I) \le \kappa_n < 2m(I_{n+1}) \rightarrow 0$, as $n \rightarrow \infty$. Since $I$ is fixed, there exists the smallest $n \ge N+1$ such that $I \intersection I_n \ne \emptyset$, and for this $n$, $m(I) \le \kappa_{n-1} < 2m(I_n)$.
+
+    Let $a_n$ be the midpoint of $I_n$ - then the distance to the furthest point of $I$ from $a_n$  is less than or equal to 
+    $$ m(I) + \frac{1}{2}m(I_n) < 2m(I_n) + \frac{1}{2}m(I_n) = \frac{5}{2}m(I_n) $$
+    So $x \in S_n$, where $S_n$ is an interval centred at $a_n$ and five times the length of $I_n$, and
+    $$ R \subset \Union_{n=N+1}^\infty S_n $$
+    which gives that
+    $$ \mustar(R) \le \sum_{n=N+1}^\infty m(S_n) \le 5\sum_{n=N+1}^\infty m(I_n) < 5\frac{\epsilon}{5} = \epsilon $$
+\end{proof}
+
+\begin{thm}
+  Let $f$ be non-decreasing on an interval $[a, b]$. Then $f$ is differentiable a.e. on $[a, b]$, and the derivative $f'$ is integrable, with
+  $$ \int_a^b f' d\mu \le f(b) - f(a) $$
+\end{thm}
+
+\begin{proof}
+  It is sufficient to show the existence and equality of $\Dml, \Dmu, \Dpl, \Dpu$ a.e..
+
+  First, consider the set
+  $$ E = \{ x \in [a, b] : \Dpu > \Dml \} $$
+  (considering the other cases of inequality similarly). Then
+  $$ E = \Union_{u, v \in \Q} E_{u, v}, E_{u, v} = \{ x \in [a, b] : \Dpu > u > v > \Dml \} $$
+  It would be sufficient to show that $\mustar(E_{u, v}) = 0$. Take $\epsilon > 0$, and $G$ to be an open set such that $E_{u, v} \subset G$, which we can choose such that $\mu(G) < \mustar(E_{u, v}) + \epsilon$ (from the exercises).
+
+  Since $\Dml < v$, for each point $x \in E_{u, v}$, there exists an arbitrarily small $h$ such that
+  $$ I_{x, h} = [ x - h, x] \subset G \text{ and } f(x) - f(x-h) < vh $$
+  Then by the Vitali lemma, we can choose from the family $\{ I_{x, h} \}$ a finite subfamily $I_1, I_2, \dots I_N$ whose interiors cover a subset $A \subset E_{u, v}, \mustar(A) > \mustar(E_{u, v}) - \epsilon$.
+
+  Summing over $I_1, I_2, \dots I_N$ we obtain
+  $$ \sum_{n=1}^N f(x_n) - f(x_n - h_n) < v \sum_{n=1}^N h_n < v \mu(G) < v (\mustar(E_{u, v}) + \epsilon) $$
+
+  Conversely, $\forall y \in A$, there exists an arbitrarily small $l$ such that $I_{y, l} = (y, y + l) \subset I_n$ for some $n$ and $ f(y + l) - f(y) > ul$, by $\Dpu > u$. Then by the Vitali lemma, we choose from $\{ I_{y, l}\}$ a finite subfamily of disjoint intervals $K_1, K_2, \dots K_M$ which cover a subset 
+  $$ B \subset A, \mustar(B) > \mustar(A) - \epsilon > \mustar(E_{u, v}) - 2\epsilon $$
+
+  Summing over $K_1, K_2, \dots K_M$ we obtain
+    $$ \sum_{j=1}^M f(y_j + l_j) - f(y_j) > u\sum_{j=1}^M l_j >  u(\mustar(E_{u, v}) - 2\epsilon) $$
+    Since $I_{y, l} \subset I_n$ for some $n \le N$, and since $f$ is non-decreasing, 
+    $$ \sum_{j=1}^M f(y_j + l_j) - f(y_j) \le \sum_{n=1}^N f(x_n) - f(x_n - h_n) $$
+    giving
+    $$ u(\mustar(E_{u, v}) - 2\epsilon) < v(\mustar(E_{u, v}) + \epsilon) $$
+    and
+    $$ u\mustar(E_{u, v}) \le v\mustar(E_{u, v}) $$
+    but by the initial definition, $u > v$, so $\mustar(E_{u, v}) = 0$. So the outer measure of $E$ is also 0, and the measure of the inequality sets of all the pairs of limits is $0$ - so the limits agree a.e..
+
+    To show differentiability, it remains to show that the limits are finite a.e. - let $g_n(x) = n(f(x + \frac{1}{n}) - f(x))$, with $f(x) = f(b), x > b$. Then $g_n(x) \rightarrow \Dml = \dots = \Dpu$, and by the previous argument, $g_n$ converges to a limit or diverges to infinity a.e.. $g_n$ is in fact integrable over $[a, b]$ and $g_n \ge 0$. Then
+    $$ \int_a^b g_n d\mu = f(b) - n\int_a^{a+\frac{1}{n}} f d\mu \le f(b) - nf(a)\frac{1}{n} = f(b) - f(a) $$
+    Let $\phi_n(x) = \inf_{k \ge n} g_k(x)$ - this is measurable, with $\phi_1(x) \le \phi_2(x) \le \dots$, and $0 \le \phi_n \le g_n$, so
+    $$ \int_a^b \phi_n d\mu = \int_a^b g_n d\mu \le f(b) - f(a) $$
+    so by the Levi theorem, the finite limit $\phi_n \rightarrow \psi$ exists a.e.. If $\phi_n \rightarrow \psi$ then $g_n \rightarrow \psi$, but $g_n \rightarrow f' = \psi$, and
+    $$ \int_a^b f' d\mu \le f(b) - f(a) $$
+\end{proof}
+
+\begin{corollary}
+  For any integrable function $f$, the derivative 
+  $$ \frac{d}{dx} \int_a^x f d\mu $$
+    exists a.e..
+\end{corollary}
+
+\begin{proof}
+  The integral is the difference of two non-decreasing functions.
+\end{proof}
+
+We now approach the question - when is
+$$ \frac{d}{dx}\int_a^x fd\mu = f(x) $$
+Denote 
+$$ \int f(t) d\mu = \int f(t) dt $$
+
+\begin{lemma}
+  Let $f(x)$ be integrable on $[a, b]$ and $\int_a^x f dt = 0$, for all $x \in [a, b]$.
+
+    Then $f(t) = 0$ a.e. on $[a, b]$.
+\end{lemma}
+
+\begin{proof}
+    Suppose $f(t) > 0$ on some $A \subset [a, b]$, with $\mu(A) > 0$.
+
+    Then there exists a closed $F \subset A$, with $\mu(F) > 0$ - take $G = (a, b) \backslash F$, which is an open set, and so can be expressed as a countable union of open intervals
+    $$ G = \Union_{n=1}^\infty (a_n, b_n) $$
+
+    We have that
+    $$ 0 = \int_a^b f dt = \int_F f dt + \int_G f dt $$
+    giving that
+    $$ \int_G f dt = -\int_F f dt \ne 0 $$
+    by the corollary to the Chebyshev inequality.
+
+    By the expression of $G$ as the union of open intervals
+    $$ \int_G f dt = \sum_n \int_{a_n}^{b_n} f dt \ne 0 $$
+    so at least one element of the infinite sum is non-zero - let this element be $N$. Then either
+    $$ \int_a^{a_n} f dt \ne 0 \text{ or } \int_a^{b_n} \ne 0 $$
+    which is a contradiction of our initial assumption. \contradiction
+
+    The proof is similar when $f(t) < 0$ on some set of non-zero measure.
+\end{proof}
+
+\begin{lemma}
+  Let $f$ be integrable and \underline{bounded} on $[a, b]$ and define
+  $$ \Phi(x) = \int_a^x f d\mu $$
+  Then $\Phi'(x) = f(x)$ a.e. on $[a, b]$.
+\end{lemma}
+
+\begin{proof}
+  Let $\abs{f(x)} \le K$ on $[a, b]$, and define
+  $$ f_j(x) = \frac{\Phi(x+h) - \Phi(x)}{h}, h = \frac{1}{j} $$
+  which has the properties
+  \begin{enumerate}
+     \item $f_j(x) = \frac{1}{h} \int_x^{x+h} f dt$, so $\abs{f_j(x)} \le K$.
+     \item $f_j(x) \rightarrow \Phi'(x)$ a.e., by the corollary to ???
+     \item $\Phi(x)$ is continuous, following from the absolute continuity of the integral. So $\Phi(x)$ is measurable and bounded, and hence is integrable.
+  \end{enumerate}
+
+  By the bounded convergence theorem applied to $f_j$, 
+  \begin{align*}
+      \int_a^{\tilde b} \Phi'(x) dx &= \lim_{j \to \infty} \int_a^{\tilde b} f_j(x) dx \\
+      &= \lim_{h \to 0} \frac{1}{h} \int_a^{\tilde b} \Phi(x + h) - \Phi(x) dx \\
+      &= \lim_{h \to 0} \frac{1}{h} \left(\int_{\tilde b}^{\tilde b + h} \Phi(x) dx - \int_a^{a+h} \Phi(x) dx \right) \\
+      &= \Phi(\tilde b) - \Phi(a) &\text{ (proof is an exercise)} 
+  \end{align*}
+
+  So
+  $$ \int_a^{\tilde b} \Phi'(x) dx = \int_a^{\tilde b} f(x) dx $$
+  and
+  $$ \int_a^{\tilde b} \Phi'(x) - f(x) dx = 0, \tilde b \in (a, b) $$
+  so by the previous lemma, $\Phi'(x) = f(x)$ a.e..
+\end{proof}
+
+\begin{thm}
+  Let $f$ be integrable on $[a, b]$, and define
+    $$ \Phi(x) = \int_a^x f d\mu$$
+  Then $\Phi'(x) = f(x)$ a.e. on $[a, b]$.
+\end{thm}
+
+\begin{proof}
+  If $f$ is bounded, the proof is in the previous lemma.
+
+  In general, let $n > 0$. Assume w.l.o.g. that $f(x) \ge 0$. Let
+  $$ f_n(x) = \text{min}(f(x), n), x \in [a, b] $$
+  We have that $f(x) - f_n(x) \ge 0$, and define
+  $$ G_n(x) = \int_a^x f(t) - f_n(t) dt $$
+  which is a non-decreasing function of $x$ - so $G_n'(x)$ eists a.e.
+
+  By the previous lemma,
+  $$ \frac{d}{dx} \int_a^x f_n(t) dt = f_n(x) $$
+  a.e., so
+  $$ G_n'(x) = \Phi'(x) - f_n(x) $$
+  a.e., which can be rewritten as
+  $$ \Phi'(x) = G_n'(x) + f_n(x) \ge f_n(x) \text{ a.e.} $$
+  Giving
+  \begin{align*}
+    \int_a^b \Phi'(x) dx &\ge \int_a^b f_n(x) dx \\
+    \int_a^b \Phi'(x) dx &\ge \int_a^b f(x) dx = \Phi(b) - \Phi(a)
+  \end{align*}
+  But since $\Phi(x)$ is non-decreasing, we have by theorem ??? that
+  $$ \int_a^b \Phi'(x) dx \le \Phi(b) - \Phi(a)$$
+  so
+  $$ \int_a^b \Phi'(x) dx = \Phi(b) - \Phi(a) = \int_a^b f(x) dx $$
+  so
+  $$ \int_a^b \Phi'(x) dx - \int_a^b f(x) dx = \int_a^b \Phi'(x) - f(x) dx = 0 $$
+  but, recalling that $\Phi'(x) - f(x) \ge 0$, by the corollary to the Chebyshev inequality, we obtain that $\Phi'(x) = f(x)$ a.e..
+\end{proof}
+
+Thus, $\frac{d}{dx}\int_a^x f d\mu = f(x)$ a.e. for integrable $f$. We then ask - which functions $F$ can be represented in the form
+$$ F(x) = \int_a^x f d\mu $$
+with $f$ some integrable function - in other words, which $F$ can be written as indefinite integrals of some $f$?
+
+\section{Bounded variation}
+
+Let $f: [a, b] \to \R$, and consider the finite subdivisions of $[a, b]$
+$$ a = x_0 < x_1 < \dots < x_n = b $$
+
+\begin{defn}
+  $$ V_a^b (f) = \sup \sum_{k=1}^n \abs{f(x_k) - f(x_{k-1})} $$
+  where the supremum is taken over all the finite subdivisions of $[a, b]$, is called the \underline{total variation} of $f$ over $[a, b]$.
+\end{defn}
+
+\begin{defn}
+    If $V_a^b(f) < \infty$ then $f$ is called a function of bounded variation (B.V.) on $[a, b]$, or $f \in B.V.$.
+\end{defn}
+
+\begin{rem}
+    Any monotone function $f$ on $[a, b]$ is B.V. and $V_a^b(f) = \abs{f(b) - f(a)}$.
+\end{rem}
+
+\begin{lemma}
+  The B.V functions on $[a, b]$ form a linear space - i.e.
+  $$ f \in B.V., g \in B.V. \implies f + g \in B.V. $$
+  $$ f \in B.V., c \in \R \implies c f \in B.V. $$
+\end{lemma}
+
+\begin{proof}
+  Let $f : [a, b] \to \R$ be a B.V. function, and take $c \in \R$.
+
+  Then $V_a^b(cf) = \abs{c}V_a^b(f)$, which is finite.
+
+  If $f, g: [a, b] \to \R$ are both functions of B.V., then $V_a^b(f + g) \le V_a^b(f) + V_a^b(g)$, so the total variation of the sum is finite.
+\end{proof}
+
+\begin{lemma}
+  For $a < b < c$, then $V_a^b(f) + V_b^c(f) = V_a^c(f)$.
+\end{lemma}
+
+\begin{proof}
+  Consider a subdivision of $[a, c]$ where $b$ is one of the division points i.e. $\exists i, x_i = b$. Then
+  $$ \sum_{k=1}^n \abs{f(x_k) - f(x_{k-1})} \le V_a^b (f) + V_b^c (f) $$
+  Now consider an arbitrary subdivision. Note that increasing the precision of the subdivision by adding points increases the sum, giving that
+  $$ V_a^c (f) \le V_a^b(f) + V_b^c(f) $$
+
+  On the other hand, for every $\epsilon > 0$ there exist subdivisions $x_j', x_j''$ of $[a, b], [b, c]$ such that
+  $$ \sum_j \abs{f(x_j') - f(x_{j-1}')} > V_a^b(f) - \frac{\epsilon}{2} $$
+  $$ \sum_j \abs{f(x_j'') - f(x_{j-1}'')} > V_b^c(f) - \frac{\epsilon}{2} $$
+  Connecting these subdivisions together, we obtain
+  $$ V_a^c (f) \ge V_a^b(f) + V_b^c (f) $$
+\end{proof}
+
+\begin{corollary}
+  $v(x) = V_a^x(f)$ is non-decreasing.
+\end{corollary}
+
+\begin{thm}
+  $$ f \in B.V. \iff f \text{ is the difference of 2 non-decreasing functions} $$
+\end{thm}
+
+\begin{proof}
+  Assume $f$ is the difference of 2 non-decreasing functions. As the B.V. space is linear, clearly $f \in B.V.$.
+
+  Conversely, assume $f \in B.V.$, and let $v(x) = V_a^x(f), a \le x \le b$.
+
+  Then $\phi = v - f$ is a non-decreasing function - indeed, for $x' \le x''$,
+  $$ \phi(x'') - \phi(x') = v(x'') - v(x') - (f(x'') - f(x')) $$
+  But $x', x''$ is a trivial subdivision, so
+  $$ \abs{f(x'') - f(x')} \le V_{x'}^{x''} (f) = v(x'') - v(x') $$
+  so
+  $$ \phi(x'') - \phi(x') \ge 0$$
+  so $f = v - \phi$, where $v, \phi$ are both non-decreasing functions.
+\end{proof}
+
+\begin{corollary}
+  A function of B.V. is differentiable a.e. and the derivative is integrable.
+\end{corollary}
+
+First, we extend the definition of jump functions as follows - let $x_1, x_2, \dots \in [a, b]$, and take two sequences $h_1, h_2, \dots, g_1, g_2, \dots \in \R$ such that
+$$ \sum_j \abs{h_j} + {g_j} < \infty $$
+and if $x_n = a$, then $g_n = 0$, and if $x_n = b$, then $h_n = 0$.
+
+Then the jump function is
+$$ J(x) = \sum_{x_n \le x} g_n + \sum_{x_n < x} h_n $$
+We note that $V_a^b(J) < \infty$, so $J \in B.V.$ on $[a, b]$.
+
+\begin{thm}
+  A function $f$ of B.V. on $[a, b]$ can be uniquely written in the form
+  $$ f = \phi + J $$
+  where $\phi, J \in B.V.$, $\phi$ is continuous, and $J$ is a jump function.
+\end{thm}
+
+\begin{defn}
+  $f: [a, b] \to \R$ is called absolutely continuous (a.c.) on $[a, b]$ if $\forall \epsilon > 0$, there exists $\delta > 0$ such that
+  $$ \sum_{j=1}^n \abs{f(b_j) - f(a_j)} < \epsilon $$
+  for any finite family of disjoint subintervals of $[a, b]$ $\{ (a_j, b_j)\}$ satisfying
+  $$ \sum_{j=1}^n (b_j - a_j) < \delta $$
+\end{defn}
+
+\begin{rem}
+  \begin{enumerate}
+    \item Any a.c. function is continuous - in fact, it is uniformly continuous. To prove this, consider the family of a single interval.
+    \item Any a.c. function is also a function of B.V..
+        \begin{proof}
+          Let $f$ be a.c., set $\epsilon = 1$, and take the corresponding value of $\delta$.
+
+          Take any subdivision of $[a, b]$ and split it (by adding points if necessary) into $K$ sets of intervals $\{ (a_j, b_j \}^{(m)}, m = 1, 2, \dots, K$ with each set satisfying 
+          $$ \frac{\delta}{2} < \sum_{j=1}^n b_j - a_j < \delta $$
+          so that $K \le \frac{2(b - a)}{\delta} + 1$. Hence, $V_a^b(f) \le 1 + 1 + \dots + 1 = K$.
+        \end{proof}
+    \item The a.c.. functions on $[a, b]$ form a linear manifold in B.V..
+    \item Any indefinite integral $\Phi(x) = \int_a^x f d\mu$ is an a.c. function.
+        \begin{proof}
+          $f = f_{+} - f_{-}, f_{+}, f_{-} \ge 0$. For $f_{+}$, $\int_a^x f_{+} d\mu$ is non-decreasing and the statement for it follows from the absolute continuity of the integral. Then by the fact that the a.c. functions form a linear manifold, $f$ is a.c..
+        \end{proof}
+  \end{enumerate}
+\end{rem}
+
+\begin{lemma}
+  If $f$ is a.c. and $f' = 0$ a.e. on $[a, b]$, then $f$ is a constant function.
+\end{lemma}
+
+Note that this is not true for functions which are not absolutely continuous - a jump function has derivative 0 a.e., but is non-constant.
+
+\begin{proof}
+  Let $f$ be a.c. on $[a, b]$.
+
+    Take $c \in [a, b]$, and let $A \subset (a, c)$ such that $\mu(A) = c - a$, with $f'(x) = 0$ on $A$. Let $\epsilon, \eta > 0$- then for any $x \in A$, there exists arbitrarily small $h > 0$ such that $ [x, x+h] \subset [a, c] $ and $\abs{f(x+h) - f(x)} < \eta\epsilon$.
+
+    By the Vitali lemma, there exist a finite family of non-overlapping intervals $[a_k, b_k]$ such that
+  $$ a = b_0 \le a_1 < b_1 \le a_2 < b_2 \le a_3 < b_3 \le \dots b_n = c = a_{n+1} $$
+  with
+  $$ \sum_{k=0}^n \abs{a_{k+1} - b_k} < \delta$$
+  where $\delta$ corresponds to our choice of $\epsilon$ in the a.c. of $f$.
+
+  We have that
+  $$ \sum_{k=0}^n \abs{f(b_k) - f(a_k)} < \eta\sum_{k=1}^n (b_k - a_k) \le \eta(c - a) $$
+  $$ \sum_{k=0}^n \abs{f(a_{k+1}) - f(b_k)} < \epsilon $$
+  by the absolute continuity of $f$.
+
+  Then as $\eta, \epsilon$ are arbitrary, $f(c) = f(a)$ - since this is independent of the choice of $c$, $f$ is a constant function.
+\end{proof}
+
+\begin{thm}
+  A function $\Phi(x)$ is an indefinite integral if and only if it is a.c..
+\end{thm}
+
+\begin{proof}
+  We have already shown that indefinite integrals are a.c..
+
+  Let $\Phi$ be a.c.. Then $\Phi$ is of B.V., so $\Phi$ is differentiable a.e., and $\Phi'$ is integrable.
+
+  Let $f(x) = \Phi(x) - \int_a^x \Phi' d\mu$. As the difference of a.c. functions, $f$ is a.c.. Additionally, the derivative exists a.e., and so
+  $$ f' = \Phi' - \Phi' = 0 $$
+  a.e., so by the previous lemma, $f$ is a constant - thus
+  $$ \Phi(x) = \int_a^x \Phi' d\mu + \Phi(a) \text{ (Newton-Liebnitz form)} $$
+\end{proof}
+
+\begin{rem}
+  Integration by parts holds for the Lebesgue integral, but the $f$ corresponding to $f'$ should be a.c..
+ $$ \int_a^b f * g d\mu = (f * G)_a^b - \int_a^b G * f' d\mu \text{ if $f$ is a.c.} $$
+  where $G(x) = \int_a^x g d\mu$.
+\end{rem}
+
+Recall that a function $f$ of B.V. can be written $f = \phi + J$, with $\phi$ continuous and $J$ a jump function.
+
+Let $\psi(x) = \int_a^x \phi' d\mu$. Consider $\chi = \phi - \psi$ - this difference is continuous, of B.V., and $\chi' = 0$ a.e.
+
+\begin{defn}
+    A continuous function of B.V. is called \underline{singular continuous} (s.c.) if its derivative is $0$ a.e..
+\end{defn}
+
+\begin{thm}
+  Any function of B.V. can be written in the form
+  $$ f = \psi + \chi + J $$ where $J$ is a jump function, $\psi$ a.c., and $\chi$ is s.c..
+
+  This form is unique up to constants.
+\end{thm}
+
+\begin{rem}
+  In the above form, $f' = \psi'$, so integration recovers only the a.c. component of $f$.
+\end{rem}
+
+\end{document}
