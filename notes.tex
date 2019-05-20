@@ -1238,7 +1238,7 @@ From now on, all sets we consider are measurable.
     \end{enumerate}
 \end{rem}
 
-\begin{thm}
+\begin{thm}\label{sigma_additivity_of_the_integral}
     Let $A = \Union_n A_n$ be a finite or countable union, with $A_j \intersection A_k = \emptyset, j \ne k$. Let $f$ be integrable on $A$.
 
     Then $f$ is integrable on each $A_n$ and $\int_A f d\mu = \sum_n \int_{A_n} f d \mu$, where the series converges absolutely.
@@ -1302,13 +1302,13 @@ From now on, all sets we consider are measurable.
 
     In general, let $A_n = \{ x \in A : n \le \abs{f(x)} < n + 1 \}$, $B_N = \Union_{n=1}^N A_n$, and $C_N = A \backslash B_N$.
 
-    By ???, and the disjointedness of $A_n$,
+    By \ref{sigma_additivity_of_the_integral}, and the disjointedness of $A_n$,
     $$ \int_A \abs{f} d\mu = \sum_{n_1}^\infty \int_{A_n} \abs{f} d\mu $$
 
     Then we can fix $\epsilon > 0$, and choose $N$ s.t.
     $$ \sum_{N+1}^\infty \int_{A_n} \abs{f} d\mu = \int_{C_N} \abs{f} d\mu < \frac{\epsilon}{2} $$
 
-    Let $ 0 < \delta < \frac{\epsilon}{2(N+1)}$. If $\mu(e) < \delta$, then by property 5 and ???,
+    Let $ 0 < \delta < \frac{\epsilon}{2(N+1)}$. If $\mu(e) < \delta$, then by property 5 and \ref{sigma_additivity_of_the_integral},
     $$ \abs{\int_e f d\mu} \le \int_e \abs{f} d\mu = \int_{e \intersection B_N} \abs{f} d\mu + \int_{e \intersection C_N} \abs{f} d\mu $$
     But
     $$ \int_{e \intersection B_N} \abs{f} d\mu \le \mu(e) \sup_{B_N} \abs{f} = \mu(e)(N + 1) < \delta(N+1) < \frac{\epsilon}{2} $$
@@ -1925,7 +1925,7 @@ Monotone functions are differentiable a.e..
     $$ \mustar(R) \le \sum_{n=N+1}^\infty m(S_n) \le 5\sum_{n=N+1}^\infty m(I_n) < 5\frac{\epsilon}{5} = \epsilon $$
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{integral_of_non_decreasing_derivative_is_less_than_difference_of_bounds}
   Let $f$ be non-decreasing on an interval $[a, b]$. Then $f$ is differentiable a.e. on $[a, b]$, and the derivative $f'$ is integrable, with
   $$ \int_a^b f' d\mu \le f(b) - f(a) $$
 \end{thm}
@@ -1967,7 +1967,7 @@ Monotone functions are differentiable a.e..
     $$ \int_a^b f' d\mu \le f(b) - f(a) $$
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{derivative_of_integral_exists_ae}
   For any integrable function $f$, the derivative 
   $$ \frac{d}{dx} \int_a^x f d\mu $$
     exists a.e..
@@ -2003,7 +2003,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
     By the expression of $G$ as the union of open intervals
     $$ \int_G f dt = \sum_n \int_{a_n}^{b_n} f dt \ne 0 $$
     so at least one element of the infinite sum is non-zero - let this element be $N$. Then either
-    $$ \int_a^{a_n} f dt \ne 0 \text{ or } \int_a^{b_n} \ne 0 $$
+    $$ \int_a^{a_n} f dt \ne 0 \text{ or } \int_a^{b_n} f dt \ne 0 $$
     which is a contradiction of our initial assumption. \contradiction
 
     The proof is similar when $f(t) < 0$ on some set of non-zero measure.
@@ -2021,7 +2021,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
   which has the properties
   \begin{enumerate}
      \item $f_j(x) = \frac{1}{h} \int_x^{x+h} f dt$, so $\abs{f_j(x)} \le K$.
-     \item $f_j(x) \rightarrow \Phi'(x)$ a.e., by the corollary to ???
+     \item $f_j(x) \rightarrow \Phi'(x)$ a.e., by the corollary \ref{derivative_of_integral_exists_ae}
      \item $\Phi(x)$ is continuous, following from the absolute continuity of the integral. So $\Phi(x)$ is measurable and bounded, and hence is integrable.
   \end{enumerate}
 
@@ -2066,7 +2066,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
     \int_a^b \Phi'(x) dx &\ge \int_a^b f_n(x) dx \\
     \int_a^b \Phi'(x) dx &\ge \int_a^b f(x) dx = \Phi(b) - \Phi(a)
   \end{align*}
-  But since $\Phi(x)$ is non-decreasing, we have by theorem ??? that
+  But since $\Phi(x)$ is non-decreasing, we have by theorem \ref{integral_of_non_decreasing_derivative_is_less_than_difference_of_bounds} that
   $$ \int_a^b \Phi'(x) dx \le \Phi(b) - \Phi(a)$$
   so
   $$ \int_a^b \Phi'(x) dx = \Phi(b) - \Phi(a) = \int_a^b f(x) dx $$
@@ -2323,7 +2323,7 @@ uniquely up to constants.
 Note that $\mu_\chi(\{x\}) = 0$ for any single point $x$.
 
 \begin{defn}
-  Let $F : \R to \R$ be a bounded, non-decreasing continuous-from-the-left function. We can extend $\mu_F$ to $\R$ from intervals - the resulting measure is finite, and is also called the Lebesgue-Stieltjes measure.
+  Let $F : \R \to \R$ be a bounded, non-decreasing continuous-from-the-left function. We can extend $\mu_F$ to $\R$ from intervals - the resulting measure is finite, and is also called the Lebesgue-Stieltjes measure.
   
   This measure has the property
   $$ \mu_F(\R) = F(+\infty) - F(-\infty) $$
