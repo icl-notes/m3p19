@@ -1375,7 +1375,7 @@ From now on, all sets we consider are measurable.
     $$ \int_A f_n d\mu \rightarrow \int_A f d\mu $$
 \end{corollary}
 
-\begin{thm}[monotone convergence theorem - Levi]
+\begin{thm}[monotone convergence theorem - Levi]\label{levi_theorem}
 
     Let $f_1(x) \le f_2(x) \le \dots$ on $A$, with $f_n(x)$ integrable on $A$ and $\int_A f_n d\mu \le K, \forall n$ where $K$ is some constant.
 
@@ -1517,7 +1517,7 @@ We first note that this is trivial for boxes in $\R^n$, by the definitions of bo
     Then
     $$ \int_{[a, b]} \highF_n d\mu = \Omega_n; \int_{[a, b]} \lowF_n d\mu = \omega_n $$
 
-    We note that $\highF_n$ forms a non-increasing sequence, and similarly $\lowF_n$ a non-decreasing sequence. By the Levi theorem ???, we then have that
+    We note that $\highF_n$ forms a non-increasing sequence, and similarly $\lowF_n$ a non-decreasing sequence. By the Levi theorem \ref{levi_theorem}, we then have that
     $$ \highF_n(x) \rightarrow \highF(x) \ge f(x), n \rightarrow \infty $$
     $$ \lowF_n(x) \rightarrow \lowF(x) \le f(x), n \rightarrow \infty $$
     with $\highF, \lowF$ integrable, where additionally we can switch the limit and the integral, giving
@@ -1643,6 +1643,7 @@ $$ A_y = \{ x : (x, y) \in A \} $$
 \end{proof}
 
 \begin{thm}
+  \label{measure_of_product_set_is_integral_over_each_dimension}
   For any $\mu$-measurable set $A$,
   $$ \mu(A) = \int_X \mu_y(A_x) d \mu_x = \int_Y \mu_x(A_x) d\mu_y $$
 \end{thm}
@@ -1682,9 +1683,17 @@ $$ A_y = \{ x : (x, y) \in A \} $$
 
 %TODO Catch up with lecture 16
 
-\begin{thm}
-    For any measurable set $A$, and taking $B$ constructed as before
-    $$ \mu(A) = \int_B f(x) d \mu_x $$
+This gives the result
+\begin{thm}\label{measure_of_graph_is_integral}
+    If $B \subset X$ is a $\mu_x$ measurable set, and $Y = \R$ with $\mu_y$ the Lebesgue measure, and $f : X \to Y$ is a non-negative integrable function, then we can define
+    $$ A = \{ (x, y) | x \in B, 0 \le y \le f(x) \} $$
+    then
+    $$ \mu_y(A_x) = \begin{cases} 
+      f(x), &x \in B \\
+      0, &x \not \in B
+    \end{cases} $$
+    and
+    $$ \mu(A) = \int_B f d \mu_x $$
 \end{thm}
 
 \begin{thm}(Furbini's theorem)
@@ -1702,13 +1711,13 @@ $$ A_y = \{ x : (x, y) \in A \} $$
     Let
     $$ W = \{ (x, y, z) : (x, y) \in A, 0 \le z \le f(x, y) \} $$
 
-    Then by theorem ???, $\lambda(W) = \int_A f d\mu$, and so by theorem ???
+    Then by theorem \ref{measure_of_graph_is_integral}, $\lambda(W) = \int_A f d\mu$, and so by theorem \ref{measure_of_product_set_is_integral_over_each_dimension}
     $$ \lambda(W) = \int_A f d\mu = \int_X \zeta(W_x) d \mu_x $$
     where
     $$ W_x = \{ (y, z) : (x, y, z) \in W \} $$
     and $\zeta = \mu_y \times \mu'$.
 
-    By theorem ???,
+    By theorem \ref{measure_of_graph_is_integral},
     $$ \zeta(W_x) = \int_{A_x} f d\mu_y $$
     and by combining these expressions, we obtain
     $$ \int_A f d\mu = \lambda(W) = \int_X \zeta(W_x) d\mu_x = \int_X \int_{A_x} f d\mu_y d\mu_x $$
