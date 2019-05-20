@@ -1361,7 +1361,7 @@ From now on, all sets we consider are measurable.
     So $\exists N$ s.t. $\forall n \ge N$, $\forall x \in C: \abs{f_n(x) - f(x)} \le \frac{\epsilon}{2\mu(C)}$.
 
     Then 
-    $$ \int_A f d\mu - \int_A f_n d\mu = f_C (f - f_n) d\mu + \int_B f d\mu - \int_B f_n d\mu$$
+    $$ \int_A f d\mu - \int_A f_n d\mu = \int_C (f - f_n) d\mu + \int_B f d\mu - \int_B f_n d\mu$$
     and so
     $$ \abs{\int_A f d\mu - \int_A f_n d\mu} \le \mu(C)\frac{\epsilon}{2\mu(C)} + \frac{\epsilon}{4} + \frac{\epsilon}{4} = \epsilon $$
 \end{proof}
