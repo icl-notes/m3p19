@@ -1040,7 +1040,7 @@ $$ f(x) = \begin{cases}
   Then the sets $$ \{ x \in A : f(x) < c \}, \{ x \in X \backslash A : f(x) < c \} $$ are measurable, and it follows that the set $\{ x \in X : f(x) < c \}$ is measurable, giving the measurability of $f$.
 \end{proof}
 
-\begin{thm}
+\begin{thm}[Egorov's theorem]
     Let $E$ be a set of finite measure - and let $f_n(x)$ be a sequence of measurable functions converging a.e. on $E$ to $f(x)$. 
 
     Then $\forall \delta > 0$ there exists a measurable set $E_\delta \subset E$ s.t. 
@@ -1238,7 +1238,7 @@ From now on, all sets we consider are measurable.
     \end{enumerate}
 \end{rem}
 
-\begin{thm}
+\begin{thm}\label{sigma_additivity_of_the_integral}
     Let $A = \Union_n A_n$ be a finite or countable union, with $A_j \intersection A_k = \emptyset, j \ne k$. Let $f$ be integrable on $A$.
 
     Then $f$ is integrable on each $A_n$ and $\int_A f d\mu = \sum_n \int_{A_n} f d \mu$, where the series converges absolutely.
@@ -1302,13 +1302,13 @@ From now on, all sets we consider are measurable.
 
     In general, let $A_n = \{ x \in A : n \le \abs{f(x)} < n + 1 \}$, $B_N = \Union_{n=1}^N A_n$, and $C_N = A \backslash B_N$.
 
-    By ???, and the disjointedness of $A_n$,
+    By \ref{sigma_additivity_of_the_integral}, and the disjointedness of $A_n$,
     $$ \int_A \abs{f} d\mu = \sum_{n_1}^\infty \int_{A_n} \abs{f} d\mu $$
 
     Then we can fix $\epsilon > 0$, and choose $N$ s.t.
     $$ \sum_{N+1}^\infty \int_{A_n} \abs{f} d\mu = \int_{C_N} \abs{f} d\mu < \frac{\epsilon}{2} $$
 
-    Let $ 0 < \delta < \frac{\epsilon}{2(N+1)}$. If $\mu(e) < \delta$, then by property 5 and ???,
+    Let $ 0 < \delta < \frac{\epsilon}{2(N+1)}$. If $\mu(e) < \delta$, then by property 5 and \ref{sigma_additivity_of_the_integral},
     $$ \abs{\int_e f d\mu} \le \int_e \abs{f} d\mu = \int_{e \intersection B_N} \abs{f} d\mu + \int_{e \intersection C_N} \abs{f} d\mu $$
     But
     $$ \int_{e \intersection B_N} \abs{f} d\mu \le \mu(e) \sup_{B_N} \abs{f} = \mu(e)(N + 1) < \delta(N+1) < \frac{\epsilon}{2} $$
@@ -1361,7 +1361,7 @@ From now on, all sets we consider are measurable.
     So $\exists N$ s.t. $\forall n \ge N$, $\forall x \in C: \abs{f_n(x) - f(x)} \le \frac{\epsilon}{2\mu(C)}$.
 
     Then 
-    $$ \int_A f d\mu - \int_A f_n d\mu = f_C (f - f_n) d\mu + \int_B f d\mu - \int_B f_n d\mu$$
+    $$ \int_A f d\mu - \int_A f_n d\mu = \int_C (f - f_n) d\mu + \int_B f d\mu - \int_B f_n d\mu$$
     and so
     $$ \abs{\int_A f d\mu - \int_A f_n d\mu} \le \mu(C)\frac{\epsilon}{2\mu(C)} + \frac{\epsilon}{4} + \frac{\epsilon}{4} = \epsilon $$
 \end{proof}
@@ -1375,7 +1375,7 @@ From now on, all sets we consider are measurable.
     $$ \int_A f_n d\mu \rightarrow \int_A f d\mu $$
 \end{corollary}
 
-\begin{thm}[monotone convergence theorem - Levi]
+\begin{thm}[monotone convergence theorem - Levi]\label{levi_theorem}
 
     Let $f_1(x) \le f_2(x) \le \dots$ on $A$, with $f_n(x)$ integrable on $A$ and $\int_A f_n d\mu \le K, \forall n$ where $K$ is some constant.
 
@@ -1517,7 +1517,7 @@ We first note that this is trivial for boxes in $\R^n$, by the definitions of bo
     Then
     $$ \int_{[a, b]} \highF_n d\mu = \Omega_n; \int_{[a, b]} \lowF_n d\mu = \omega_n $$
 
-    We note that $\highF_n$ forms a non-increasing sequence, and similarly $\lowF_n$ a non-decreasing sequence. By the Levi theorem ???, we then have that
+    We note that $\highF_n$ forms a non-increasing sequence, and similarly $\lowF_n$ a non-decreasing sequence. By the Levi theorem \ref{levi_theorem}, we then have that
     $$ \highF_n(x) \rightarrow \highF(x) \ge f(x), n \rightarrow \infty $$
     $$ \lowF_n(x) \rightarrow \lowF(x) \le f(x), n \rightarrow \infty $$
     with $\highF, \lowF$ integrable, where additionally we can switch the limit and the integral, giving
@@ -1643,6 +1643,7 @@ $$ A_y = \{ x : (x, y) \in A \} $$
 \end{proof}
 
 \begin{thm}
+  \label{measure_of_product_set_is_integral_over_each_dimension}
   For any $\mu$-measurable set $A$,
   $$ \mu(A) = \int_X \mu_y(A_x) d \mu_x = \int_Y \mu_x(A_x) d\mu_y $$
 \end{thm}
@@ -1682,9 +1683,17 @@ $$ A_y = \{ x : (x, y) \in A \} $$
 
 %TODO Catch up with lecture 16
 
-\begin{thm}
-    For any measurable set $A$, and taking $B$ constructed as before
-    $$ \mu(A) = \int_B f(x) d \mu_x $$
+This gives the result
+\begin{thm}\label{measure_of_graph_is_integral}
+    If $B \subset X$ is a $\mu_x$ measurable set, and $Y = \R$ with $\mu_y$ the Lebesgue measure, and $f : X \to Y$ is a non-negative integrable function, then we can define
+    $$ A = \{ (x, y) | x \in B, 0 \le y \le f(x) \} $$
+    then
+    $$ \mu_y(A_x) = \begin{cases} 
+      f(x), &x \in B \\
+      0, &x \not \in B
+    \end{cases} $$
+    and
+    $$ \mu(A) = \int_B f d \mu_x $$
 \end{thm}
 
 \begin{thm}(Furbini's theorem)
@@ -1702,13 +1711,13 @@ $$ A_y = \{ x : (x, y) \in A \} $$
     Let
     $$ W = \{ (x, y, z) : (x, y) \in A, 0 \le z \le f(x, y) \} $$
 
-    Then by theorem ???, $\lambda(W) = \int_A f d\mu$, and so by theorem ???
+    Then by theorem \ref{measure_of_graph_is_integral}, $\lambda(W) = \int_A f d\mu$, and so by theorem \ref{measure_of_product_set_is_integral_over_each_dimension}
     $$ \lambda(W) = \int_A f d\mu = \int_X \zeta(W_x) d \mu_x $$
     where
     $$ W_x = \{ (y, z) : (x, y, z) \in W \} $$
     and $\zeta = \mu_y \times \mu'$.
 
-    By theorem ???,
+    By theorem \ref{measure_of_graph_is_integral},
     $$ \zeta(W_x) = \int_{A_x} f d\mu_y $$
     and by combining these expressions, we obtain
     $$ \int_A f d\mu = \lambda(W) = \int_X \zeta(W_x) d\mu_x = \int_X \int_{A_x} f d\mu_y d\mu_x $$
@@ -1916,7 +1925,7 @@ Monotone functions are differentiable a.e..
     $$ \mustar(R) \le \sum_{n=N+1}^\infty m(S_n) \le 5\sum_{n=N+1}^\infty m(I_n) < 5\frac{\epsilon}{5} = \epsilon $$
 \end{proof}
 
-\begin{thm}
+\begin{thm}\label{integral_of_non_decreasing_derivative_is_less_than_difference_of_bounds}
   Let $f$ be non-decreasing on an interval $[a, b]$. Then $f$ is differentiable a.e. on $[a, b]$, and the derivative $f'$ is integrable, with
   $$ \int_a^b f' d\mu \le f(b) - f(a) $$
 \end{thm}
@@ -1958,7 +1967,7 @@ Monotone functions are differentiable a.e..
     $$ \int_a^b f' d\mu \le f(b) - f(a) $$
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{derivative_of_integral_exists_ae}
   For any integrable function $f$, the derivative 
   $$ \frac{d}{dx} \int_a^x f d\mu $$
     exists a.e..
@@ -1994,7 +2003,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
     By the expression of $G$ as the union of open intervals
     $$ \int_G f dt = \sum_n \int_{a_n}^{b_n} f dt \ne 0 $$
     so at least one element of the infinite sum is non-zero - let this element be $N$. Then either
-    $$ \int_a^{a_n} f dt \ne 0 \text{ or } \int_a^{b_n} \ne 0 $$
+    $$ \int_a^{a_n} f dt \ne 0 \text{ or } \int_a^{b_n} f dt \ne 0 $$
     which is a contradiction of our initial assumption. \contradiction
 
     The proof is similar when $f(t) < 0$ on some set of non-zero measure.
@@ -2012,7 +2021,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
   which has the properties
   \begin{enumerate}
      \item $f_j(x) = \frac{1}{h} \int_x^{x+h} f dt$, so $\abs{f_j(x)} \le K$.
-     \item $f_j(x) \rightarrow \Phi'(x)$ a.e., by the corollary to ???
+     \item $f_j(x) \rightarrow \Phi'(x)$ a.e., by the corollary \ref{derivative_of_integral_exists_ae}
      \item $\Phi(x)$ is continuous, following from the absolute continuity of the integral. So $\Phi(x)$ is measurable and bounded, and hence is integrable.
   \end{enumerate}
 
@@ -2057,7 +2066,7 @@ $$ \int f(t) d\mu = \int f(t) dt $$
     \int_a^b \Phi'(x) dx &\ge \int_a^b f_n(x) dx \\
     \int_a^b \Phi'(x) dx &\ge \int_a^b f(x) dx = \Phi(b) - \Phi(a)
   \end{align*}
-  But since $\Phi(x)$ is non-decreasing, we have by theorem ??? that
+  But since $\Phi(x)$ is non-decreasing, we have by theorem \ref{integral_of_non_decreasing_derivative_is_less_than_difference_of_bounds} that
   $$ \int_a^b \Phi'(x) dx \le \Phi(b) - \Phi(a)$$
   so
   $$ \int_a^b \Phi'(x) dx = \Phi(b) - \Phi(a) = \int_a^b f(x) dx $$
@@ -2314,7 +2323,7 @@ uniquely up to constants.
 Note that $\mu_\chi(\{x\}) = 0$ for any single point $x$.
 
 \begin{defn}
-  Let $F : \R to \R$ be a bounded, non-decreasing continuous-from-the-left function. We can extend $\mu_F$ to $\R$ from intervals - the resulting measure is finite, and is also called the Lebesgue-Stieltjes measure.
+  Let $F : \R \to \R$ be a bounded, non-decreasing continuous-from-the-left function. We can extend $\mu_F$ to $\R$ from intervals - the resulting measure is finite, and is also called the Lebesgue-Stieltjes measure.
   
   This measure has the property
   $$ \mu_F(\R) = F(+\infty) - F(-\infty) $$
