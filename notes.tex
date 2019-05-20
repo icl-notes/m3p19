@@ -43,6 +43,7 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\cL}{\mathcal{L}}
 \newcommand{\cR}{\mathcal{R}}
+\newcommand{\cM}{\mathcal{M}}
 \newcommand{\Real}{\operatorname{Re}}
 \newcommand{\Imp}{\operatorname{Im}}
 \newcommand{\PP}{$ \phi \;$}
@@ -52,6 +53,7 @@
 \newcommand{\Res}[2]{\mathop{Res} \left[ #1, \; #2 \right]}
 
 \newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 
 \newcommand{\contradiction}{\begin{flushright} \textreferencemark \end{flushright}}
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -2245,7 +2247,212 @@ Let $\psi(x) = \int_a^x \phi' d\mu$. Consider $\chi = \phi - \psi$ - this differ
 \end{thm}
 
 \begin{rem}
-  In the above form, $f' = \psi'$, so integration recovers only the a.c. component of $f$.
+  In the above form, $f' \sim \psi'$, so integration recovers only the a.c. component of $f$ - i.e.
+  $$ \int_a^b f' d\mu = \psi(b) - \psi(a) $$
 \end{rem}
+
+\begin{rem}
+  $f$ is a.c. if and only if $\mu(f(A)) = 0$ wherever $\mu(A) = 0$, where $\mu$ is the Lebesgue measure.
+\end{rem}
+
+This suggests that the concept of absolute continuity can be generalised to any measure.
+
+\begin{defn}
+Let $\eta, \nu$ be measures on $(X, \cM)$. $\eta$ is called a.c. with respect to $\nu$ if $\eta(A) = 0$ whenever $\nu(A) = 0$, for $A \in \cM$.
+\end{defn}
+
+This lets us generalise the concept of the derivative to any measure.
+
+\begin{theorem}[Radon-Nikodym]
+Take $(X, \cM, \mu)$ to be any measure space, with $\mu$ finite. Let $\Phi : X \to \R$ be a $\sigma$-additive function on $\cM$ (such a function is called a signed measure).
+
+If $\Phi$ is a.c. with respect to $\mu$, then there exists a measurable function $f : X \to \R$ such that $\Phi(A) = \int_A f d\mu$, and $f$  is called the derivative of $\Phi$ with respect to $\mu$.
+\end{theorem}
+
+Recall the Lebesgue-Stieltjes measure corresponding to a non-decreasing continuous-from-the-left function $F: [a, b] \to \R$.
+
+$F$ is of B.V, so $F = H + \psi + \chi$, where $H$ is a jump function, $\psi$ is a.c. and $\chi$ is s.c.. Then
+$$ \mu_F = \mu_H + \mu_\psi + \mu_\chi $$
+uniquely up to constants.
+
+\begin{lemma}
+  $\mu_H$ is called a discrete measure, and
+  $$ \mu_H(A) = \sum_{x_n \in A} h_n $$
+  for any $A \subset [a, b]$.
+\end{lemma}
+
+\begin{proof}
+  $\mu_H(\{x_n\}) = \mu_H([x_n, x_n]) = h_n$, and $\mu_H([a, b] \setminus \Union_n x_n) = 0$, then the result follows by $\sigma$-additivity.
+\end{proof}
+
+\begin{lemma}\label{psi_measure_is_psiderivative_integral}
+  $\mu_\psi(A) = \int_A \psi' d\mu$ - for $\mu$ the Lebesgue measure and $A \subset [a, b]$.
+\end{lemma}
+
+\begin{proof}
+  By the Newton-Liebnitz formula,
+  $$ \mu_\psi[\alpha, \beta) = \psi(\beta) - \psi(\alpha) = \int_\alpha^\beta \psi' d\mu $$
+  It follows for $A$ measurable by the uniqueness of the $\sigma$-additive extension of $\mu_\psi$.
+\end{proof}
+
+\begin{rem}
+  It follows that if the Lebesgue measure $\mu(A) = 0$ then $\mu_\psi(A) = 0$ (in other words, $\psi$ is a.c. w.r.t. $\mu$).
+\end{rem}
+
+\begin{defn}
+  A measure $\nu$ on a measure space $(X, \cM, \nu)$ is said to be concentrated on a measurable set $A$ if $\nu(B) = 0$ for any $B \in \cM$ such that $B \subset X \setminus A$.
+\end{defn}
+
+\begin{lemma}
+  $\mu_\chi$ is concentrated on a set of 0 Lebesgue measure - the set where $\chi'$ is either non-zero or undefined.
+\end{lemma}
+
+\begin{proof}
+  It is left as an exercise.
+\end{proof}
+
+Note that $\mu_\chi(\{x\}) = 0$ for any single point $x$.
+
+\begin{defn}
+  Let $F : \R to \R$ be a bounded, non-decreasing continuous-from-the-left function. We can extend $\mu_F$ to $\R$ from intervals - the resulting measure is finite, and is also called the Lebesgue-Stieltjes measure.
+  
+  This measure has the property
+  $$ \mu_F(\R) = F(+\infty) - F(-\infty) $$
+\end{defn}
+
+\begin{rem}
+  Every finite measure on $\R$ is a Lebesgue-Stieltjes measure, by
+  $$ F(x) = \mu((-\infty, x)) $$
+\end{rem}
+
+\begin{defn}
+  Let $\mu_F$ be a Lebesgue-Stieltjes measure on $[a, b]$. The Lebesgue integral w.r.t. $\mu_F$ is called the Lebesgue-Stieltjes integral denoted
+  $$ \int_A f d\mu_F = \int_A f dF $$
+\end{defn}
+
+This has the properties:
+\begin{enumerate}
+    \item $$ \int_a^b f dH = \sum_n f(x_n)_n $$
+    \item $$ \int_a^b f d\psi = \int_a^b f\psi' d\mu $$
+\end{enumerate}
+
+\begin{proof}
+  First note that if $f$ is a multiple of the characteristic function of $A$, then the second property follows from \ref{psi_measure_is_psiderivative_integral}, as
+  $$ \int_a^b f d\psi = K \int_a^b 1 d\psi = K\mu_\psi([a, b]) = K\int_a^b \psi'd\mu = \int_a^b f\psi' d\mu $$
+  
+  Then we can extend it to any simple function, by $\sigma$-additivity, and for any function $f$, we have (w.l.o.g.) a non-decreasing sequence of simple, integrable functions $f_n \to f$. Then $f_n\psi' \to f\psi'$, and so by the Levi theorem
+  $$ \lim_{n \to \infty} \int_a^b f_n\psi' d\mu = \int_a^b f_n d\psi = \int_a^b f\psi' d\mu = \int_a^b f d\psi $$
+\end{proof}
+
+\subsection{Applications to probability}
+
+\begin{defn}
+Let $(X, \cM, P)$ be a measure space with $P(X) = 1$ - this is called a probability space, with $P$ the probability, and $A \in \cM$ events.
+\end{defn}
+
+\begin{defn}
+  A function $f : X \to \R$ is called a random variable, and we define the distribution function of f as 
+  $$ F(c) = P(\{ x \in X : f(x) < c\}) $$
+  This is a non-decreasing, continuous-from-the-left function, with $F(-\infty) = 0, F(+\infty) = 1$.
+\end{defn}
+
+\begin{defn}
+  A random variable $f$ is called discrete if the distribution function $F$ is a jump function.
+\end{defn}
+
+\begin{defn}
+  A random variable $f$ is called a.c. if the distribution function $F$ is a.c., and the derivative $F'$ is called the density of the distribution function.
+\end{defn}
+
+\begin{defn}
+  A random variable $f$ is called s.c. if the distribution function $F$ is s.c..
+\end{defn}
+
+We consider in particular moments of $f$
+\begin{itemize}
+    \item The expectation - $E(f) = \int_{-\infty}^\infty x dF$
+    \item etc.
+\end{itemize}
+
+We can say that $f$ "transforms" $P$ to $\mu_F$
+
+\begin{thm}[Borel-Cantelli]
+  Let $(X, \cM, P)$ be a measure space, and take $A_n \in \cM$.
+  
+  Consider 
+  $$ \{A_n \text{ i.o}\} = \Intersection_{n = 1}^\infty \Union_{k \ge n} A_k $$
+  If $\sum_{n=1}^\infty P(A_n) < \infty$ then $P(\{A_n \text{ i.o}\}) = 0$.
+\end{thm}
+
+\section{$L^p$ spaces}
+
+Let $(X, \cM, \mu)$ be a $\sigma$-additive, complete measure space.
+
+\newcommand{\normlp}[1]{\norm{#1}_{L^p}}
+
+\begin{defn}
+  $L^p(X, \mu)$, for $p \ge 1$, is a normed linear space whose elements are equivalence classes of measurable functions $f: X \to \R$ s.t. $\abs{f}^p$ with respect to $\mu$ over $X$.
+  
+  The norm in $L^p$ is given by
+  $$ \normlp{f} = \left(\int_X \abs{f}^p d\mu\right)^\frac{1}{p} $$
+\end{defn}
+
+\newcommand{\ess}{\text{ess}}
+\newcommand{\esssup}{{\ess\sup}}
+
+\begin{defn}
+  $L^\infty$ is a normed linear space of equivalence classes of measurable functions $f : X \to \R$ such that
+  \begin{align*}
+    \norm{f}_{L^\infty} &= \esssup_{x \in X} f(x) \\
+      &= \inf \{ a \in \R : \mu(\{ x \in X : \abs{f(x)} > a \}) = 0 \}
+  \end{align*}
+  is finite, and with norm $\norm{f}_{L^\infty}$
+\end{defn}
+
+In these spaces, addition and multiplication are defined as usual.
+
+In $L^2$, the norm is generated by the inner product of functions
+$$ \langle f, g \rangle = \int_X fg d\mu $$
+and $\norm{f}_{L^2} = \sqrt{\abs{\langle f, f \rangle}}$.
+
+As in any normed space, we can define a metric on $L^p$ by
+$$ \eta(f, g) = \normlp{f - g} $$
+and we have the notion of convergence by this metric on $L^p$.
+
+\begin{lemma}
+  Take $\mu(X) < \infty$. Then convergence in $L^2$ on $X$ implies convergence in $L^1$ on $X$.
+\end{lemma}
+
+Recall the Cauchy-Schwarz inequality, which states that, for any normed vector space
+$$ \abs{\langle u, v\rangle} \le \norm{u}\norm{v} $$
+
+\begin{proof}
+  By the Cauchy-Schwarz inequality,
+  $$ \norm{f_n - f}_{L^1} = \int_X \abs{f_n - f}d\mu \le \mu(X)^\frac{1}{2} \left( \int_X \abs{f_n - f}^2 d\mu \right)^\frac{1}{2} = \mu(X)^\frac{1}{2}\norm{f_n -f}_{L^2} $$
+\end{proof}
+
+\begin{lemma}
+  If $f_n, f \in L^1$, and $f_n \to f$ in $L^1$, then $f_n \to f$ in measure.
+\end{lemma}
+
+\begin{proof}
+  By the Chebyshev inequality,
+  $$ \mu\{ x \in X : \abs{f_n - f} \ge c\} \le \frac{1}{c}\int_X \abs{f_n - f} d\mu $$
+  But the right-hand side converges to $0$ by convergence in $L^1$, so the limit of the left side is $0$ for any $c > 0$ - so $f_n \to f$ in measure.
+\end{proof}
+
+If $\mu(X) < \infty$, then
+\begin{enumerate}
+    \item Uniform convergence implies
+    \item Convergence in $L^2$ implies
+    \item Convergence in $L^1$ implies
+    \item Convergence in measure
+\end{enumerate}
+And recall also that
+\begin{enumerate}
+    \item Uniform convergence implies
+    \item Convergence a.e. implies
+    \item Convergence in measure
+\end{enumerate}
 
 \end{document}
